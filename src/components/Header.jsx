@@ -6,6 +6,16 @@ import searchIcon from '../images/searchIcon.svg';
 
 function Header({ title, renderSearchButton = true }) {
   const [renderSearchBar, setRenderSearchBar] = useState(false);
+  const inputs = [
+    'ingredient-search-radio',
+    'name-search-radio',
+    'first-letter-search-radio',
+  ];
+  const inputsNames = [
+    'Ingrediente',
+    'Nome',
+    'Primeira Letra',
+  ];
 
   return (
     <div>
@@ -30,10 +40,26 @@ function Header({ title, renderSearchButton = true }) {
         </button>
       )}
       { renderSearchBar && (
-        <input
-          type="text"
-          data-testid="search-input"
-        />
+        <div>
+          <input
+            type="text"
+            data-testid="search-input"
+          />
+          {
+            inputs.map((item, index) => (
+              <label key={ index } htmlFor={ item }>
+                <input type="radio" data-testid={ item } id={ item } name="radioSelect" />
+                { inputsNames[index] }
+              </label>
+            ))
+          }
+          <button
+            type="button"
+            data-testid="exec-search-btn"
+          >
+            Buscar
+          </button>
+        </div>
       )}
     </div>
   );
