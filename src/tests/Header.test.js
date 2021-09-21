@@ -36,6 +36,9 @@ describe('Header', () => {
     }
   };
 
+  const searchInput = 'search-input';
+  const searchTopButton = 'search-top-btn';
+
   describe('Exibe o header em cada página', () => {
     it('Deve ter os elementos em Comidas', () => {
       renderWithRouterAndRedux(<App />, { initialEntries: ['/comidas'] });
@@ -148,50 +151,24 @@ describe('Header', () => {
       renderWithRouterAndRedux(<App />,
         { initialEntries: ['/comidas'] });
 
-      const nullSearchInput = screen.queryByTestId('search-input');
+      expect(screen.queryByTestId(searchInput)).toBeNull();
 
-      expect(nullSearchInput).toBeNull();
+      userEvent.click(screen.queryByTestId(searchTopButton));
 
-      userEvent.click(screen.getByTestId('search-top-btn'));
-
-      const searchInput = screen.queryByTestId('search-input');
-
-      expect(searchInput).toBeInTheDocument();
+      expect(screen.queryByTestId(searchInput)).toBeInTheDocument();
     });
 
     it('Deve sumir a barra de busca quando o botão é clicado novamente', () => {
       renderWithRouterAndRedux(<App />,
         { initialEntries: ['/comidas'] });
 
-      userEvent.click(screen.getByTestId('search-top-btn'));
+      userEvent.click(screen.queryByTestId(searchTopButton));
 
-      const searchInput = screen.queryByTestId('search-input');
+      expect(screen.queryByTestId(searchInput)).toBeInTheDocument();
 
-      expect(searchInput).toBeInTheDocument();
+      userEvent.click(screen.queryByTestId(searchTopButton));
 
-      userEvent.click(screen.getByTestId('search-top-btn'));
-
-      const nullSearchInput = screen.queryByTestId('search-input');
-
-      expect(nullSearchInput).toBeNull();
+      expect(screen.queryByTestId(searchInput)).toBeNull();
     });
   });
 });
-
-/*
-  const hasHeader = (title, withSearchButton = true) => {
-cy.get('[data-testid="profile-top-btn"]')
-  .should('have.attr', 'src')
-  .should('include', 'profileIcon');
-
-cy.get('[data-testid="page-title"]').contains(title);
-
-if (withSearchButton){
-  cy.get('[data-testid="search-top-btn"]')
-    .should('have.attr', 'src')
-    .should('include', 'searchIcon');
-} else {
-  cy.get('[data-testid="search-top-btn"]').should('not.exist');
-}
-};
-*/
