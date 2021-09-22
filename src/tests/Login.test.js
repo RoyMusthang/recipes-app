@@ -4,6 +4,9 @@ import { screen } from '@testing-library/react';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouterAndRedux';
 
+// Testes feitos em coletivo pela turma 13-a
+// Responsavél pelo codigo atual Josué Lobo
+
 const BTN_LOGIN = 'login-submit-btn';
 const INPUT_EMAIL = 'email-input';
 const INPUT_PASSWORD = 'password-input';
