@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 function DrinkCard({ drink }) {
   const { strDrinkThumb, strDrink, strCategory } = drink;
   return (
-    <div>
-      <img src={ strDrinkThumb } alt="Drink" />
-      <h2>{ strDrink }</h2>
+    <div data-testid={ `${id}-recipe-card` }>
+      <img
+        src={ strDrinkThumb }
+        data-testid={ `${id}-card-img` }
+        alt="Drink"
+      />
+      <h2 data-testid={ `${id}-card-name` }>{ strDrink }</h2>
       { (strCategory.length) && strCategory
         .filter((_, index) => index < Number('5'))
         .map((category, index) => (
