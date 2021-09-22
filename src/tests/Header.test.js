@@ -130,6 +130,13 @@ describe('Header', () => {
 
       hasHeader('Receitas Favoritas', false);
     });
+
+    it('O header tem os ícones corretos na tela de receitas favoritas', () => {
+      renderWithRouterAndRedux(<App />,
+        { initialEntries: ['/receitas-feitas'] });
+
+      hasHeader('Receitas Feitas', false);
+    });
   });
 
   describe('Testa o funcionamento dos botões', () => {
