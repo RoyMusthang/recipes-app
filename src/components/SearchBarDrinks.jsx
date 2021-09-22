@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getDrinks } from '../services/index';
+// import { getDrinks } from '../services/index';
 
 const inputs = [
   'ingredient-search-radio',

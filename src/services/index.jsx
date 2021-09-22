@@ -1,6 +1,5 @@
-export async function getMeals(inputValue, inputRadioValue) {
+export async function getMeals(inputValue/* , inputRadioValue */) {
   try {
-    // if ( inputRadioValue )
     const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputValue}`;
     return (await fetch(url)).json();
   } catch (error) {
@@ -8,7 +7,7 @@ export async function getMeals(inputValue, inputRadioValue) {
   }
 }
 
-export async function getDrinks(inputValue, inputRadioValue) {
+export async function getDrinks(inputValue/* , inputRadioValue */) {
   try {
     const url2 = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputValue}`;
     return (await fetch(url2)).json();

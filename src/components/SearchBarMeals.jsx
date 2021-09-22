@@ -1,5 +1,5 @@
 import React from 'react';
-import { getMeals } from '../services';
+// import { getMeals } from '../services';
 
 const inputs = [
   'ingredient-search-radio',
