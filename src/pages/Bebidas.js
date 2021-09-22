@@ -14,6 +14,7 @@ function Bebidas() {
         { (allDrinks.length) && allDrinks
           .filter((_, index) => index < Number('12'))
           .map((drink, i) => (<DrinkCard
+            id={ i }
             key={ `${i}-${drink.idDrink}` }
             drink={ drink }
           />)) }

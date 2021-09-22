@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function MealCard({ meal }) {
+function MealCard({ meal, id }) {
   const { strMealThumb, strMeal } = meal;
   return (
-    <div>
-      <img src={ strMealThumb } alt="Meal" />
-      <h2>{ strMeal }</h2>
+    <div data-testid={ `${id}-recipe-card` }>
+      <img
+        src={ strMealThumb }
+        data-testid={ `${id}-card-img` }
+        alt="Meal"
+      />
+      <h2 data-testid={ `${id}-card-name` }>{ strMeal }</h2>
     </div>
   );
 }
