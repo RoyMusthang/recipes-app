@@ -9,13 +9,13 @@ function Bebidas() {
   const dispatch = useDispatch();
   useEffect(() => {
     async function fetchApi() {
-      const api = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+      const api = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const json = await api.json();
       console.log(json);
       dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json });
     }
     fetchApi();
-  }, [dispatch]);
+  }, []);
   const { allDrinks } = useSelector((state) => state.drinks);
   return (
     <div>
