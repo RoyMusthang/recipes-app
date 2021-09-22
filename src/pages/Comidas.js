@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MealCard from '../components/MealCard';
@@ -7,6 +7,15 @@ import MealCard from '../components/MealCard';
 // import PropTypes from 'prop-types';
 
 function Comidas() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function fetchApi() {
+      const api = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+      const json = await api.json();
+      dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
+    }
+    fetchApi();
+  }, [dispatch]);
   const { allMeals } = useSelector((state) => state.meals);
   return (
     <div>
