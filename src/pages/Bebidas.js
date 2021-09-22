@@ -11,7 +11,6 @@ function Bebidas() {
     async function fetchApi() {
       const api = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const json = await api.json();
-      console.log(json);
       dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json });
     }
     fetchApi();
@@ -21,7 +20,6 @@ function Bebidas() {
     <div>
       <Header title="Bebidas" mealOrDrink="drink" />
       <main>
-        { console.log(allDrinks) }
         { (allDrinks.length !== 0) && allDrinks.drinks
           .filter((_, index) => index < Number('12'))
           .map((drink, i) => (<DrinkCard
