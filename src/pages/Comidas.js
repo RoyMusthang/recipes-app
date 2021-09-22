@@ -15,7 +15,7 @@ function Comidas() {
       dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
     }
     fetchApi();
-  }, []);
+  }, [dispatch]);
   const { allMeals } = useSelector((state) => state.meals);
   return (
     <div>

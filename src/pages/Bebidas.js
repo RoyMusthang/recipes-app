@@ -15,7 +15,7 @@ function Bebidas() {
       dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json });
     }
     fetchApi();
-  }, []);
+  }, [dispatch]);
   const { allDrinks } = useSelector((state) => state.drinks);
   return (
     <div>
