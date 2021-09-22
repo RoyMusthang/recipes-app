@@ -5,7 +5,7 @@ import Header from '../components/Header';
 function ComidaOrigem() {
   return (
     <div>
-      <Header title="Explorar Origem" />
+      <Header title="Explorar Origem" mealOrDrink="meal" />
       This is A Comida Origem
     </div>
   );

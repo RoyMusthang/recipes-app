@@ -3,19 +3,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBarDrinks from './SearchBarDrinks';
+import SearchBarMeals from './SearchBarMeals';
 
-function Header({ title, renderSearchButton = true }) {
+function Header({ title, renderSearchButton = true, mealOrDrink = false }) {
   const [renderSearchBar, setRenderSearchBar] = useState(false);
-  const inputs = [
-    'ingredient-search-radio',
-    'name-search-radio',
-    'first-letter-search-radio',
-  ];
-  const inputsNames = [
-    'Ingrediente',
-    'Nome',
-    'Primeira Letra',
-  ];
 
   return (
     <div>
@@ -32,34 +24,16 @@ function Header({ title, renderSearchButton = true }) {
       { renderSearchButton && (
         <button
           type="button"
-          data-testid="search-top-btn"
-          src={ searchIcon }
           onClick={ () => setRenderSearchBar(!renderSearchBar) }
         >
-          Buscar
+          <img src={ searchIcon } data-testid="search-top-btn" alt="Botão de busca" />
         </button>
       )}
-      { renderSearchBar && (
-        <div>
-          <input
-            type="text"
-            data-testid="search-input"
-          />
-          {
-            inputs.map((item, index) => (
-              <label key={ index } htmlFor={ item }>
-                <input type="radio" data-testid={ item } id={ item } name="radioSelect" />
-                { inputsNames[index] }
-              </label>
-            ))
-          }
-          <button
-            type="button"
-            data-testid="exec-search-btn"
-          >
-            Buscar
-          </button>
-        </div>
+      { (renderSearchBar && mealOrDrink === 'meal') && (
+        <SearchBarMeals />
+      )}
+      { (renderSearchBar && mealOrDrink === 'drink') && (
+        <SearchBarDrinks />
       )}
     </div>
   );
