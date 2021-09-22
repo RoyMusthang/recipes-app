@@ -10,8 +10,8 @@ describe('Header', () => {
       name: 'xablau' });
     const profileInput = screen.queryByRole('img', {
       name: /profile icon/i });
-    const searchInput = screen.queryByRole('button', {
-      name: /buscar/i });
+    const searchInput = screen.queryByRole('img', {
+      name: /botão de busca/i });
 
     expect(headerTitle).toBe(null);
     expect(profileInput).toBe(null);
@@ -24,7 +24,7 @@ describe('Header', () => {
     const profileInput = screen.getByRole('img', {
       name: /profile icon/i });
     const searchInput = hasSearch ? screen.getByRole('button', {
-      name: /buscar/i }) : null;
+      name: /botão de busca/i }) : null;
 
     expect(headerTitle).toBeInTheDocument();
     expect(profileInput).toBeInTheDocument();
