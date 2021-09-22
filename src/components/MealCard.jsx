@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 function MealCard({ meal, id }) {
   const { strMealThumb, strMeal } = meal;
+  console.log('oioioi');
   return (
     <div data-testid={ `${id}-recipe-card` }>
       <img
