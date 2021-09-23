@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function DrinkCard({ drink }) {
+function DrinkCard({ drink, id }) {
   const { strDrinkThumb, strDrink, strCategory } = drink;
   return (
     <div data-testid={ `${id}-recipe-card` }>
