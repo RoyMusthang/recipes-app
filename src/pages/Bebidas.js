@@ -21,7 +21,6 @@ function Bebidas() {
     <div>
       <Header title="Bebidas" mealOrDrink="drink" />
       <main>
-        { console.log(allDrinks) }
         { (allDrinks.length !== 0) && allDrinks.drinks
           .filter((_, index) => index < Number('12'))
           .map((drink, i) => (<DrinkCard

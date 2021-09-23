@@ -19,7 +19,7 @@ export default function SearchBarDrinks() {
       if (payload.drinks !== null) {
         dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload });
         if (payload.drinks.length === 1) {
-          history.push(`bebidas/${payload.drinks[0].idDrink}`);
+          history.push(`/bebidas/${payload.drinks[0].idDrink}`);
         }
       } else {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
