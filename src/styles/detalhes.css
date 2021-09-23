@@ -1,0 +1,12 @@
+.recomendation-container {
+  display: flex;
+  /* flex-flow: wrap; */
+  height: 250px; 
+  width: 360px;
+  overflow-x: scroll;
+  padding: 10px;
+}
+
+.recomendation-container div {
+  margin-left: 50px; 
+}
