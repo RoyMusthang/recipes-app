@@ -25,15 +25,15 @@ function DetalhesBebida() {
     fetchApi();
   }, [idRequest]);
 
-  // const ingredients = [];
+  const ingredients = [];
 
-  // if (drinkDetail.length !== 0) {
-  //   for (let i = 1; i <= Number('15'); i += 1) {
-  //     if (drinkDetail[0][`strIngredient${i}`].length !== 0) {
-  //       ingredients.push(drinkDetail[0][`strIngredient${i}`]);
-  //     } else break;
-  //   }
-  // }
+  if (drinkDetail.length !== 0) {
+    for (let i = 1; i <= Number('15'); i += 1) {
+      if (drinkDetail[0][`strIngredient${i}`].length !== 0) {
+        ingredients.push(drinkDetail[0][`strIngredient${i}`]);
+      } else break;
+    }
+  }
 
   return (
     <div>
@@ -61,14 +61,14 @@ function DetalhesBebida() {
           <h4 data-testid="recipe-category">{ drinkDetail[0].strCategory }</h4>
 
           <ul>
-            {/* { ingredients.map((ingredient, i) => (
+            { ingredients.map((ingredient, i) => (
               <li
                 key={ `${i}-${ingredient}` }
                 data-testid={ `${i}-ingredient-name-and-measure` }
               >
                 { ingredient }
               </li>
-            )) } */}
+            )) }
           </ul>
           <p data-testid="instructions">{ drinkDetail[0].strInstructions }</p>
           <iframe title="Video" data-testid="video" src={ drinkDetail[0].strYoutube } />
