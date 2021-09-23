@@ -39,7 +39,7 @@ function DetalhesComida() {
   return (
     <div>
       { (mealDetail.length !== 0) && (
-        <>
+        <div>
           <img
             style={ { width: '100px' } }
             src={ mealDetail[0].strMealThumb }
@@ -86,7 +86,7 @@ function DetalhesComida() {
           >
             Iniciar Receita
           </button>
-        </>
+        </div>
       ) }
     </div>
   );
