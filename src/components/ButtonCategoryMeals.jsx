@@ -15,7 +15,7 @@ function ButtonCategoryMeals() {
     categoryFood();
   }, []);
 
-  async function buttonClick(categoryName) {
+  async function clickButton(categoryName) {
     if (toggle === false) {
       const api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
       const json = await api.json();
