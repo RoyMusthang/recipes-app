@@ -7,13 +7,19 @@ function DetalhesComida() {
   const match = useRouteMatch();
   const { id: idRequest } = match.params;
   const [mealDetail, setMealDetail] = useState([]);
+  const [randoms, setRandoms] = useState([]);
 
   useEffect(() => {
     const fetchApi = async () => {
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRequest}`;
+      const urlRandom = 'https://www.themealdb.com/api/json/v1/1/random.php';
       const response = await fetch(url);
       const results = await response.json();
-      console.log(results.meals);
+      const randomResponse1 = await fetch(urlRandom);
+      const randomResults1 = await randomResponse1.json();
+      const randomResponse2 = await fetch(urlRandom);
+      const randomResults2 = await randomResponse2.json();
+      setRandoms([randomResults1.meals[0], randomResults2.meals[0]]);
       setMealDetail(results.meals);
     };
     fetchApi();
@@ -64,9 +70,24 @@ function DetalhesComida() {
               </li>
             )) }
           </ul>
+          <p data-testid="instructions">{ mealDetail[0].strInstructions }</p>
+          <iframe title="Video" data-testid="video" src={ mealDetail[0].strYoutube } />
+          {
+            randoms.map((item, i) => (
+              <div key={ `${i}-${item}` } data-testid={ `${i}-recomendation-card` }>
+                <img src={ item.strMealThumb } alt="Comida Recomendada" width="250px" />
+                <h2>{ item.strMeal }</h2>
+              </div>
+            ))
+          }
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Iniciar Receita
+          </button>
         </>
       ) }
-
     </div>
   );
 }
@@ -76,9 +97,3 @@ function DetalhesComida() {
 // }.isRequired;
 
 export default DetalhesComida;
-
-// Os ingredientes devem possuir o atributo ;
-// O texto de instruções deve possuir o atributo data-testid="instructions";
-// O vídeo, presente somente na tela de comidas, deve possuir o atributo data-testid="video";
-// O card de receitas recomendadas deve possuir o atributo data-testid="${index}-recomendation-card";
-// O botão de iniciar receita deve possuir o atributo data-testid="start-recipe-btn";
