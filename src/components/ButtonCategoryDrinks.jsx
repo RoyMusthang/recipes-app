@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 function ButtonCategoryDrinks() {
   const [category, setCategory] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const categoryFood = async () => {
+    const categoryDrink = async () => {
       const api = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
       const json = await api.json();
       const drink = json.drinks.filter((_, index) => index < Number('5'));
       setCategory(drink);
     };
-    categoryFood();
+    categoryDrink();
   }, []);
+
+  async function buttonClick(categoryName) {
+    const api = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryName}`);
+    const json = await api.json();
+    dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json });
+  }
+
   return (
     <div>
       {category.map((cat, index) => (
@@ -18,6 +27,7 @@ function ButtonCategoryDrinks() {
           key={ index }
           type="button"
           data-testid={ `${cat.strCategory}-category-filter` }
+          onClick={ () => { buttonClick(cat.strCategory); } }
         >
           {cat.strCategory}
         </button>
