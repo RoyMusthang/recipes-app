@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 function DrinkCard({ drink, id }) {
   const { strDrinkThumb, strDrink } = drink;
+
   return (
     <div data-testid={ `${id}-recipe-card` }>
       <img

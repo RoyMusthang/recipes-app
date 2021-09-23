@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MealCard from '../components/MealCard';
+import ButtonCategoryMeals from '../components/ButtonCategoryMeals';
 
 // import PropTypes from 'prop-types';
 
@@ -16,11 +17,13 @@ function Comidas() {
     }
     fetchApi();
   }, [dispatch]);
+
   const { allMeals } = useSelector((state) => state.meals);
   return (
     <div>
       <Header title="Comidas" mealOrDrink="meal" />
       <main>
+        <ButtonCategoryMeals />
         { (allMeals.length !== 0) && allMeals.meals
           .filter((_, index) => index < Number('12'))
           .map((meal, i) => (<MealCard
