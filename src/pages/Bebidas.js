@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import DrinkCard from '../components/DrinkCard';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import ButtonCategoryDrinks from '../components/ButtonCategoryDrinks';
 // import PropTypes from 'prop-types';
 
 function Bebidas() {
@@ -16,12 +17,13 @@ function Bebidas() {
     }
     fetchApi();
   }, [dispatch]);
+
   const { allDrinks } = useSelector((state) => state.drinks);
   return (
     <div>
       <Header title="Bebidas" mealOrDrink="drink" />
       <main>
-        { console.log(allDrinks) }
+        <ButtonCategoryDrinks />
         { (allDrinks.length !== 0) && allDrinks.drinks
           .filter((_, index) => index < Number('12'))
           .map((drink, i) => (<DrinkCard
