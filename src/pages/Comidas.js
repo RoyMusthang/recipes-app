@@ -12,7 +12,7 @@ function Comidas() {
     <div>
       <Header title="Comidas" mealOrDrink="meal" />
       <main>
-        { (allMeals.length) && allMeals
+        { (allMeals.length !== 0) && allMeals.meals
           .filter((_, index) => index < Number('12'))
           .map((meal, i) => (<MealCard
             id={ i }
