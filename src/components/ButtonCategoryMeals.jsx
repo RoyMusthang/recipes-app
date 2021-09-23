@@ -15,7 +15,6 @@ function ButtonCategoryMeals() {
     categoryFood();
   }, []);
 
-  // nobru apelão
   async function buttonClick(categoryName) {
     if (toggle === false) {
       const api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
@@ -37,7 +36,7 @@ function ButtonCategoryMeals() {
           key={ index }
           type="button"
           data-testid={ `${cat.strCategory}-category-filter` }
-          onClick={ () => { buttonClick(cat.strCategory); } }
+          onClick={ () => { clickButton(cat.strCategory); } }
         >
           {cat.strCategory}
         </button>
