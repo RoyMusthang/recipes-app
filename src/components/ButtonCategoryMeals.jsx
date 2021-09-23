@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 function ButtonCategoryMeals() {
   const [category, setCategory] = useState([]);
+  const [toggle, setToggle] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     const categoryFood = async () => {
@@ -15,9 +16,17 @@ function ButtonCategoryMeals() {
   }, []);
 
   async function buttonClick(categoryName) {
-    const api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
-    const json = await api.json();
-    dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
+    if (toggle === false) {
+      const api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
+      const json = await api.json();
+      dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
+      setToggle(true);
+    } else {
+      const api = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const json = await api.json();
+      dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
+      setToggle(false);
+    }
   }
 
   return (
