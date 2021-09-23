@@ -11,7 +11,6 @@ function Bebidas() {
     async function fetchApi() {
       const api = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
       const json = await api.json();
-      console.log(json);
       dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json });
     }
     fetchApi();
