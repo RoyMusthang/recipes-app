@@ -6,6 +6,7 @@ import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
 
 function BebidaEmProgresso() {
   const [drinkDetail, setDrinkDetail] = useState();
+  const [enableButton, setEnableButton] = useState();
   const match = useRouteMatch();
 
   const { id: idRequest } = match.params;
@@ -40,10 +41,14 @@ function BebidaEmProgresso() {
             image={ drinkDetail[0].strdrinkThumb }
           />
           <h4 data-testid="recipe-category">{ drinkDetail[0].strCategory }</h4>
-          <IngredientListProgress eatableDetail={ drinkDetail } />
+          <IngredientListProgress
+            eatableDetail={ drinkDetail }
+            setEnableButton={ setEnableButton }
+          />
           <p data-testid="instructions">{ drinkDetail[0].strInstructions }</p>
           <button
             onClick={ () => console.log('a') }
+            disabled={ enableButton }
             type="button"
             className="finish-recipe-btn"
             data-testid="finish-recipe-btn"

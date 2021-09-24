@@ -6,6 +6,7 @@ import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
 
 function ComidaEmProcesso() {
   const [mealDetail, setMealDetail] = useState();
+  const [enableButton, setEnableButton] = useState(true);
   const match = useRouteMatch();
 
   const { id: idRequest } = match.params;
@@ -40,10 +41,14 @@ function ComidaEmProcesso() {
             image={ mealDetail[0].strMealThumb }
           />
           <h4 data-testid="recipe-category">{ mealDetail[0].strCategory }</h4>
-          <IngredientListProgress eatableDetail={ mealDetail } />
+          <IngredientListProgress
+            eatableDetail={ mealDetail }
+            setEnableButton={ setEnableButton }
+          />
           <p data-testid="instructions">{ mealDetail[0].strInstructions }</p>
           <button
             onClick={ () => console.log('a') }
+            disabled={ enableButton }
             type="button"
             className="finish-recipe-btn"
             data-testid="finish-recipe-btn"

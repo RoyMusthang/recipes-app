@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-function IngredientList({ eatableDetail }) {
+function IngredientList({ eatableDetail, setEnableButton }) {
   const dispatch = useDispatch();
   const [ingredients] = useState([]);
+
+  // const [count, setCount] = useState([]);
 
   if (eatableDetail && eatableDetail.length !== 0) {
     for (let i = 1; i <= Number('20'); i += 1) {
@@ -27,10 +29,16 @@ function IngredientList({ eatableDetail }) {
           key={ `${i}-${ingredient}` }
           data-testid="ingredient-step"
         >
-          <input type="checkbox" id={ i } name={ i } />
+          <input
+            type="checkbox"
+            id={ i }
+            name={ i }
+            onChange={ () => console.log('teste') }
+          />
           <label htmlFor={ i }>{ ingredient }</label>
         </li>
       )) }
+      {console.log(ingredients.length)}
     </ul>
   );
 }
