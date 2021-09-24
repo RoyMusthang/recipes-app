@@ -2,12 +2,12 @@ import React from 'react';
 import renderWithRouter from './helpers/renderWithRouterAndRedux';
 import App from '../App';
 
-describe('Testing filter main recipe Foods', () => {
-  it('Testing if the entire filter button is present in the main food screen',
+describe('Teste de filtro de receita principal comidas', () => {
+  it('Testando se todo os botôes de filtro estão presente na tela principal de comidas',
     async () => {
       const { history, findByTestId } = renderWithRouter(<App />);
       history.push('/comidas');
-      // const filterAll = await findByTestId('All-category-filter');
+      const filterAll = await findByTestId('All-category-filter');
       const filterBeef = await findByTestId('Beef-category-filter');
       const filterBreakfast = await findByTestId('Breakfast-category-filter');
       const filterChicken = await findByTestId('Chicken-category-filter');
@@ -17,17 +17,17 @@ describe('Testing filter main recipe Foods', () => {
       expect(filterChicken).toBeInTheDocument();
       expect(filterDessert).toBeInTheDocument();
       expect(FilterGoat).toBeInTheDocument();
-      // expect(filterAll).toBeInTheDocument();
+      expect(filterAll).toBeInTheDocument();
       expect(filterBeef).toBeInTheDocument();
     });
 });
 
-describe('Testing filter main recipe Drinks', () => {
-  it('Testing if the entire filter button is present in the main drinks screen',
+describe('Teste de filtro de receita principal bebidas', () => {
+  it('Testando se todo os botôes de filtro estão presente na tela principal de bebidas',
     async () => {
       const { history, findByTestId } = renderWithRouter(<App />);
       history.push('/bebidas');
-      // const filterAll = await findByTestId('All-category-filter');
+      const filterAll = await findByTestId('All-category-filter');
       const filterOrdinary = await findByTestId('Ordinary Drink-category-filter');
       const filterCoctail = await findByTestId('Cocktail-category-filter');
       const filterMilk = await findByTestId('Milk / Float / Shake-category-filter');
@@ -37,7 +37,7 @@ describe('Testing filter main recipe Drinks', () => {
       expect(filterMilk).toBeInTheDocument();
       expect(filterOther).toBeInTheDocument();
       expect(FilterCocoa).toBeInTheDocument();
-      // expect(filterAll).toBeInTheDocument();
+      expect(filterAll).toBeInTheDocument();
       expect(filterOrdinary).toBeInTheDocument();
     });
 });
