@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { useHistory } from 'react-router-dom';
+import IngredientList from '../components/IngredientList';
+import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
 
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
 // import PropTypes from 'prop-types';
 
 function DetalhesBebida() {
@@ -14,7 +14,8 @@ function DetalhesBebida() {
   const [drinkDetail, setDrinkDetail] = useState([]);
   const [randoms, setRandoms] = useState([]);
   const dispatch = useDispatch();
-  const { inProgress: { drinks } } = useSelector((state) => state.user);
+  const { inProgress: { drinks }, currentIngredients,
+  } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -30,27 +31,14 @@ function DetalhesBebida() {
     fetchApi();
   }, [idRequest]);
 
-  const ingredients = [];
-
-  if (drinkDetail && drinkDetail.length !== 0) {
-    for (let i = 1; i <= Number('15'); i += 1) {
-      if (drinkDetail[0][`strIngredient${i}`]) {
-        const ing = `${drinkDetail[0][`strIngredient${i}`]}`;
-        const mes = `${drinkDetail[0][`strMeasure${i}`]}`;
-        ingredients.push(`${ing} ${(mes !== 'null') ? mes : ''}`);
-      } else break;
-    }
-  }
-
   function addInProgress() {
     const verify = drinks[drinkDetail[0].idDrink];
     if (!verify) {
       dispatch({ type: 'DRINK_IN_PROGRESS',
-        payload: ingredients,
+        payload: currentIngredients,
         id: drinkDetail[0].idDrink });
-    } else {
-      history.push(`/bebidas/${drinkDetail[0].idDrink}/in-progress`);
     }
+    history.push(`/bebidas/${drinkDetail[0].idDrink}/in-progress`);
   }
 
   return (
@@ -64,29 +52,16 @@ function DetalhesBebida() {
             data-testid="recipe-photo"
           />
           <h2 data-testid="recipe-title">{ drinkDetail[0].strDrink }</h2>
-          <button
-            type="button"
-            data-testid="share-btn"
-          >
-            <img src={ shareIcon } alt="Botão de Compartilhar" />
-          </button>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-          >
-            <img src={ blackHeartIcon } alt="Favorite heart icon" />
-          </button>
+          <ShareAndFavoriteButtons
+            id={ drinkDetail[0].idDrink }
+            type="bebida"
+            alcoholicOrNot={ drinkDetail[0].strAlcoholic }
+            category={ drinkDetail[0].strCategory }
+            name={ drinkDetail[0].strDrink }
+            image={ drinkDetail[0].strDrinkThumb }
+          />
           <h4 data-testid="recipe-category">{ drinkDetail[0].strAlcoholic }</h4>
-          <ul>
-            { ingredients.map((ingredient, i) => (
-              <li
-                key={ `${i}-${ingredient}` }
-                data-testid={ `${i}-ingredient-name-and-measure` }
-              >
-                { ingredient }
-              </li>
-            )) }
-          </ul>
+          <IngredientList eatableDetail={ drinkDetail } />
           <p data-testid="instructions">{ drinkDetail[0].strInstructions }</p>
           <div className="recomendation-container">
             {randoms.filter((_, i2) => (i2 < Number('6'))).map((item, i) => (

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { useHistory } from 'react-router-dom';
+import IngredientList from '../components/IngredientList';
+import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
 
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
 // import PropTypes from 'prop-types';
 
 function DetalhesComida() {
@@ -14,7 +14,8 @@ function DetalhesComida() {
   const [mealDetail, setMealDetail] = useState([]);
   const [randoms, setRandoms] = useState([]);
   const dispatch = useDispatch();
-  const { inProgress: { meals } } = useSelector((state) => state.user);
+  const { inProgress: { meals }, currentIngredients,
+  } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -30,27 +31,14 @@ function DetalhesComida() {
     fetchApi();
   }, [idRequest]);
 
-  const ingredients = [];
-
-  if (mealDetail && mealDetail.length !== 0) {
-    for (let i = 1; i <= Number('20'); i += 1) {
-      if (mealDetail[0][`strIngredient${i}`]) {
-        const ing = `${mealDetail[0][`strIngredient${i}`]}`;
-        const mes = `${mealDetail[0][`strMeasure${i}`]}`;
-        ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
-      } else break;
-    }
-  }
-
   function addInProgress() {
     const verify = meals[mealDetail[0].idMeal];
     if (!verify) {
       dispatch({ type: 'MEAL_IN_PROGRESS',
-        payload: ingredients,
+        payload: currentIngredients,
         id: mealDetail[0].idMeal });
-    } else {
-      history.push(`/comidas/${mealDetail[0].idMeal}/in-progress`);
     }
+    history.push(`/comidas/${mealDetail[0].idMeal}/in-progress`);
   }
 
   return (
@@ -64,29 +52,16 @@ function DetalhesComida() {
             data-testid="recipe-photo"
           />
           <h2 data-testid="recipe-title">{ mealDetail[0].strMeal }</h2>
-          <button
-            type="button"
-            data-testid="share-btn"
-          >
-            <img src={ shareIcon } alt="Botão de Compartilhar" />
-          </button>
-          <button
-            type="button"
-            data-testid="favorite-btn"
-          >
-            <img src={ blackHeartIcon } alt="Favorite heart icon" />
-          </button>
+          <ShareAndFavoriteButtons
+            id={ mealDetail[0].idMeal }
+            type="comida"
+            area={ mealDetail[0].strArea }
+            category={ mealDetail[0].strCategory }
+            name={ mealDetail[0].strMeal }
+            image={ mealDetail[0].strMealThumb }
+          />
           <h4 data-testid="recipe-category">{ mealDetail[0].strCategory }</h4>
-          <ul>
-            { ingredients.map((ingredient, i) => (
-              <li
-                key={ `${i}-${ingredient}` }
-                data-testid={ `${i}-ingredient-name-and-measure` }
-              >
-                { ingredient }
-              </li>
-            )) }
-          </ul>
+          <IngredientList eatableDetail={ mealDetail } />
           <p data-testid="instructions">{ mealDetail[0].strInstructions }</p>
           <iframe title="Video" data-testid="video" src={ mealDetail[0].strYoutube } />
           <div className="recomendation-container">
