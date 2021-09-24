@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 function ButtonCategoryMeals() {
   const [category, setCategory] = useState([]);
   const [toggle, setToggle] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState('');
   const dispatch = useDispatch();
   useEffect(() => {
     const categoryFood = async () => {
@@ -15,28 +16,43 @@ function ButtonCategoryMeals() {
     categoryFood();
   }, []);
 
-  async function clickButton(categoryName) {
-    if (toggle === false) {
+  async function requestDefault() {
+    const api = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const json = await api.json();
+    dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
+  }
+
+  async function onClickCategory(categoryName) {
+    setCurrentCategory(categoryName);
+    if (!toggle || categoryName !== currentCategory) {
       const api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
       const json = await api.json();
       dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
       setToggle(true);
     } else {
-      const api = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-      const json = await api.json();
-      dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
+      requestDefault();
       setToggle(false);
     }
   }
 
   return (
     <div>
+      <button
+        onClick={ () => {
+          requestDefault();
+          setToggle(false);
+        } }
+        type="button"
+        data-testid="All-category-filter"
+      >
+        All
+      </button>
       {category.map((cat, index) => (
         <button
           key={ index }
           type="button"
           data-testid={ `${cat.strCategory}-category-filter` }
-          onClick={ () => { clickButton(cat.strCategory); } }
+          onClick={ () => { onClickCategory(cat.strCategory); } }
         >
           {cat.strCategory}
         </button>

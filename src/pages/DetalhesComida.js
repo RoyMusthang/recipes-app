@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
+
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 // import PropTypes from 'prop-types';
 
@@ -28,10 +30,10 @@ function DetalhesComida() {
 
   if (mealDetail.length !== 0) {
     for (let i = 1; i <= Number('20'); i += 1) {
-      if (mealDetail[0][`strIngredient${i}`].length !== 0) {
+      if (mealDetail[0][`strIngredient${i}`]) {
         const ing = `${mealDetail[0][`strIngredient${i}`]}`;
         const mes = `${mealDetail[0][`strMeasure${i}`]}`;
-        ingredients.push(`${ing} ${(!mes) ? '' : mes}`);
+        ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
       } else break;
     }
   }
@@ -57,7 +59,7 @@ function DetalhesComida() {
             type="button"
             data-testid="favorite-btn"
           >
-            Favoritar
+            <img src={ blackHeartIcon } alt="Favorite heart icon" />
           </button>
           <h4 data-testid="recipe-category">{ mealDetail[0].strCategory }</h4>
           <ul>

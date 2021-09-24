@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch } from 'react-router';
+
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 // import PropTypes from 'prop-types';
 
@@ -12,13 +14,13 @@ function DetalhesBebida() {
   useEffect(() => {
     const fetchApi = async () => {
       const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRequest}`;
-      const urlRandom = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const response = await fetch(url);
       const results = await response.json();
+      setDrinkDetail(results.drinks);
+      const urlRandom = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const randomResponse1 = await fetch(urlRandom);
       const randomResults1 = await randomResponse1.json();
       setRandoms(randomResults1.meals);
-      setDrinkDetail(results.drinks);
     };
     fetchApi();
   }, [idRequest]);
@@ -26,19 +28,19 @@ function DetalhesBebida() {
   const ingredients = [];
   const limitCards = 6;
 
-  if (drinkDetail.length !== 0) {
+  if (drinkDetail && drinkDetail.length !== 0) {
     for (let i = 1; i <= Number('15'); i += 1) {
-      if (drinkDetail[0][`strIngredient${i}`].length !== 0) {
+      if (drinkDetail[0][`strIngredient${i}`]) {
         const ing = `${drinkDetail[0][`strIngredient${i}`]}`;
         const mes = `${drinkDetail[0][`strMeasure${i}`]}`;
-        ingredients.push(`${ing} ${(!mes) ? '' : mes}`);
+        ingredients.push(`${ing} ${(mes !== 'null') ? mes : ''}`);
       } else break;
     }
   }
 
   return (
     <div>
-      { (drinkDetail.length !== 0) && (
+      { (drinkDetail && drinkDetail.length !== 0) && (
         <>
           <img
             style={ { width: '100px' } }
@@ -57,7 +59,7 @@ function DetalhesBebida() {
             type="button"
             data-testid="favorite-btn"
           >
-            Favoritar
+            <img src={ blackHeartIcon } alt="Favorite heart icon" />
           </button>
           <h4 data-testid="recipe-category">{ drinkDetail[0].strAlcoholic }</h4>
           <ul>
