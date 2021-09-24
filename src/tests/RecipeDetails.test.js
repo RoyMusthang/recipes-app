@@ -15,12 +15,14 @@ describe('Página de detalhes das receitas', () => {
   const videoTestId = 'video';
   const recomendationCardTestId = '0-recomendation-card';
   const startRecipeBtnTestId = 'start-recipe-btn';
+  const comidasURL = '/comidas/52771';
+  const bebidasURL = '/bebidas/178319';
 
   describe('Tela de comidas ', () => {
     it('Deve possuir todos os atributos data-testid', async () => {
       const { history } = renderWithRouterAndRedux(<App />);
 
-      history.push('/comidas/52771');
+      history.push(comidasURL);
 
       const recipePhoto = await screen.findByTestId(recipePhotoTestId);
       const title = await screen.findByTestId(recipeTitleTestId);
@@ -48,7 +50,7 @@ describe('Página de detalhes das receitas', () => {
     it('Deve ir para In Progress quando clicar em Iniciar Receita', async () => {
       const { history } = renderWithRouterAndRedux(<App />);
 
-      history.push('/comidas/52771');
+      history.push(comidasURL);
 
       const startRecipeBtn = await screen.findByTestId(startRecipeBtnTestId);
 
@@ -61,7 +63,7 @@ describe('Página de detalhes das receitas', () => {
 
       expect(pathname).toBe('/comidas/52771/in-progress');
 
-      history.push('/comidas/52771');
+      history.push(comidasURL);
 
       const continueBtn = await screen.findByRole('button',
         { name: 'Continuar Receita' });
@@ -74,7 +76,7 @@ describe('Página de detalhes das receitas', () => {
     it('Deve possuir todos os atributos data-testid', async () => {
       const { history } = renderWithRouterAndRedux(<App />);
 
-      history.push('/bebidas/178319');
+      history.push(bebidasURL);
 
       const recipePhoto = await screen.findByTestId(recipePhotoTestId);
       const title = await screen.findByTestId(recipeTitleTestId);
@@ -100,7 +102,7 @@ describe('Página de detalhes das receitas', () => {
     it('Deve ir para In Progress quando clicar em Iniciar Receita', async () => {
       const { history } = renderWithRouterAndRedux(<App />);
 
-      history.push('/bebidas/178319');
+      history.push(bebidasURL);
 
       const startRecipeBtn = await screen.findByTestId(startRecipeBtnTestId);
 
@@ -113,7 +115,7 @@ describe('Página de detalhes das receitas', () => {
 
       expect(pathname).toBe('/bebidas/178319/in-progress');
 
-      history.push('/bebidas/178319');
+      history.push(bebidasURL);
 
       const continueBtn = await screen.findByRole('button',
         { name: 'Continuar Receita' });
@@ -131,7 +133,7 @@ describe('Página de detalhes das receitas', () => {
       }));
       const { history } = renderWithRouterAndRedux(<App />);
 
-      history.push('/comidas/52771');
+      history.push(comidasURL);
 
       const firstIngredient = await screen.findByTestId(ingredientNameMeasureTestId);
 
