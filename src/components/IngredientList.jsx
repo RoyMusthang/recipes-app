@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useRouteMatch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 function IngredientList({ eatableDetail }) {
   const dispatch = useDispatch();
+  const match = useRouteMatch();
+  const { url } = match;
   const [ingredients] = useState([]);
 
   if (eatableDetail && eatableDetail.length !== 0) {
@@ -25,7 +28,11 @@ function IngredientList({ eatableDetail }) {
       { ingredients.map((ingredient, i) => (
         <li
           key={ `${i}-${ingredient}` }
-          data-testid={ `${i}-ingredient-name-and-measure` }
+          data-testid={
+            url.match('in-progress')
+              ? 'ingredient-step'
+              : `${i}-ingredient-name-and-measure`
+          }
         >
           { ingredient }
         </li>
