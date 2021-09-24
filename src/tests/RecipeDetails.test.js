@@ -4,8 +4,6 @@ import { screen } from '@testing-library/react';
 import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
-const oneMeal = require('../../cypress/mocks/oneMeal');
-
 describe('Página de detalhes das receitas', () => {
   const recipePhotoTestId = 'recipe-photo';
   const recipeTitleTestId = 'recipe-title';
