@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
@@ -44,6 +44,30 @@ describe('Página de detalhes das receitas', () => {
       expect(startRecipeBtn).toBeInTheDocument();
       expect(video).toBeInTheDocument();
     });
+
+    it('Deve ir para In Progress quando clicar em Iniciar Receita', async () => {
+      const { history } = renderWithRouterAndRedux(<App />);
+
+      history.push('/comidas/52771');
+
+      const startRecipeBtn = await screen.findByTestId(startRecipeBtnTestId);
+
+      expect(startRecipeBtn).toBeInTheDocument();
+      expect(startRecipeBtn).toHaveTextContent('Iniciar Receita');
+
+      userEvent.click(startRecipeBtn);
+
+      const { pathname } = history.location;
+
+      expect(pathname).toBe('/comidas/52771/in-progress');
+
+      history.push('/comidas/52771');
+
+      const continueBtn = await screen.findByRole('button',
+        { name: 'Continuar Receita' });
+
+      expect(continueBtn).toBeInTheDocument();
+    });
   });
 
   describe('Tela de bebidas ', () => {
@@ -73,20 +97,49 @@ describe('Página de detalhes das receitas', () => {
       expect(startRecipeBtn).toBeInTheDocument();
     });
 
-    // it('Deve ter os ingredientes e medidas', async () => {
-    //   //  https://www.leighhalliday.com/mock-fetch-jest
-    //   global.fetch = jest.fn(() => Promise.resolve({
-    //     json: () => Promise.resolve(oneMeal),
-    //   }));
-    //   const { history } = renderWithRouterAndRedux(<App />);
+    it('Deve ir para In Progress quando clicar em Iniciar Receita', async () => {
+      const { history } = renderWithRouterAndRedux(<App />);
 
-    //   history.push('/comidas/52771');
+      history.push('/bebidas/178319');
 
-    //   const firstIngredient = await screen.findByTestId(ingredientNameMeasureTestId);
+      const startRecipeBtn = await screen.findByTestId(startRecipeBtnTestId);
 
-    //   expect(firstIngredient).toBeInTheDocument();
-    //   expect(firstIngredient).toHaveTextContent('penne rigate 1 pound');
+      expect(startRecipeBtn).toBeInTheDocument();
+      expect(startRecipeBtn).toHaveTextContent('Iniciar Receita');
 
-    // });
+      userEvent.click(startRecipeBtn);
+
+      const { pathname } = history.location;
+
+      expect(pathname).toBe('/bebidas/178319/in-progress');
+
+      history.push('/bebidas/178319');
+
+      const continueBtn = await screen.findByRole('button',
+        { name: 'Continuar Receita' });
+
+      expect(continueBtn).toBeInTheDocument();
+    });
+
+    /*
+    Tentativa de cobrir a linha 36 dos arquivos de detalhe:
+
+    it('Deve ter os ingredientes e medidas', async () => {
+      //  https://www.leighhalliday.com/mock-fetch-jest
+      global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(oneMeal),
+      }));
+      const { history } = renderWithRouterAndRedux(<App />);
+
+      history.push('/comidas/52771');
+
+      const firstIngredient = await screen.findByTestId(ingredientNameMeasureTestId);
+
+      expect(firstIngredient).toBeInTheDocument();
+      expect(firstIngredient).toHaveTextContent('penne rigate 1 pound');
+
+    });
+
+    */
   });
 });
