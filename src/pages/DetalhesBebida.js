@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
@@ -7,9 +9,12 @@ import shareIcon from '../images/shareIcon.svg';
 
 function DetalhesBebida() {
   const match = useRouteMatch();
+  const history = useHistory();
   const { id: idRequest } = match.params;
   const [drinkDetail, setDrinkDetail] = useState([]);
   const [randoms, setRandoms] = useState([]);
+  const dispatch = useDispatch();
+  const { inProgress: { drinks } } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -26,7 +31,6 @@ function DetalhesBebida() {
   }, [idRequest]);
 
   const ingredients = [];
-  const limitCards = 6;
 
   if (drinkDetail && drinkDetail.length !== 0) {
     for (let i = 1; i <= Number('15'); i += 1) {
@@ -35,6 +39,17 @@ function DetalhesBebida() {
         const mes = `${drinkDetail[0][`strMeasure${i}`]}`;
         ingredients.push(`${ing} ${(mes !== 'null') ? mes : ''}`);
       } else break;
+    }
+  }
+
+  function addInProgress() {
+    const verify = drinks[drinkDetail[0].idDrink];
+    if (!verify) {
+      dispatch({ type: 'DRINK_IN_PROGRESS',
+        payload: ingredients,
+        id: drinkDetail[0].idDrink });
+    } else {
+      history.push(`/bebidas/${drinkDetail[0].idDrink}/in-progress`);
     }
   }
 
@@ -74,7 +89,7 @@ function DetalhesBebida() {
           </ul>
           <p data-testid="instructions">{ drinkDetail[0].strInstructions }</p>
           <div className="recomendation-container">
-            {randoms.filter((_, i2) => (i2 < limitCards)).map((item, i) => (
+            {randoms.filter((_, i2) => (i2 < Number('6'))).map((item, i) => (
               <div key={ `${i}-${item}` } data-testid={ `${i}-recomendation-card` }>
                 <h4 data-testid={ `${i}-recomendation-title` }>{ item.strMeal }</h4>
                 <img src={ item.strMealThumb } alt="Bebida Recomendada" width="150px" />
@@ -82,10 +97,13 @@ function DetalhesBebida() {
             ))}
           </div>
           <button
+            onClick={ addInProgress }
             type="button"
+            className="start-recipe-btn"
             data-testid="start-recipe-btn"
           >
-            Iniciar Receita
+            { (!drinks[drinkDetail[0]
+              .idDrink]) ? 'Iniciar Receita' : 'Continuar Receita' }
           </button>
         </>
       ) }
