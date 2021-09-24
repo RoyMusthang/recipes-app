@@ -32,7 +32,6 @@ function ShareAndFavoriteButtons({ id, type, area = '', category, name,
       { (copiedText) && (<h3>Link copiado!</h3>) }
       <button
         onClick={ () => {
-          console.log(pathname);
           copy(`http://localhost:3000${pathname}`);
           setCopiedText(true);
         } }
