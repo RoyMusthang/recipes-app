@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router';
-import IngredientList from '../components/IngredientList';
+import IngredientListProgress from '../components/ingredientListProgress';
 import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
 // import PropTypes from 'prop-types';
 
@@ -40,7 +40,7 @@ function ComidaEmProcesso() {
             image={ mealDetail[0].strMealThumb }
           />
           <h4 data-testid="recipe-category">{ mealDetail[0].strCategory }</h4>
-          <IngredientList eatableDetail={ mealDetail } />
+          <IngredientListProgress eatableDetail={ mealDetail } />
           <p data-testid="instructions">{ mealDetail[0].strInstructions }</p>
           <button
             onClick={ () => console.log('a') }

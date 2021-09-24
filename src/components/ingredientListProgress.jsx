@@ -25,9 +25,10 @@ function IngredientList({ eatableDetail }) {
       { ingredients.map((ingredient, i) => (
         <li
           key={ `${i}-${ingredient}` }
-          data-testid={ `${i}-ingredient-name-and-measure` }
+          data-testid="ingredient-step"
         >
-          { ingredient }
+          <input type="checkbox" id={ i } name={ i } />
+          <label htmlFor={ i }>{ ingredient }</label>
         </li>
       )) }
     </ul>
