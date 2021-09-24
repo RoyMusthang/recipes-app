@@ -32,8 +32,7 @@ function DetalhesComida() {
   }, [idRequest]);
 
   function addInProgress() {
-    const verify = meals[mealDetail[0].idMeal];
-    if (!verify) {
+    if (!meals[mealDetail[0].idMeal]) {
       dispatch({ type: 'MEAL_IN_PROGRESS',
         payload: currentIngredients,
         id: mealDetail[0].idMeal });

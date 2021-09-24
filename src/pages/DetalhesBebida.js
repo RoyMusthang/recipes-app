@@ -14,7 +14,7 @@ function DetalhesBebida() {
   const [drinkDetail, setDrinkDetail] = useState([]);
   const [randoms, setRandoms] = useState([]);
   const dispatch = useDispatch();
-  const { inProgress: { drinks }, currentIngredients,
+  const { inProgress: { cocktails }, currentIngredients,
   } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -32,17 +32,12 @@ function DetalhesBebida() {
   }, [idRequest]);
 
   function addInProgress() {
-    if (!drinks[drinkDetail[0].idDrink]) {
+    if (!cocktails[drinkDetail[0].idDrink]) {
       dispatch({ type: 'DRINK_IN_PROGRESS',
         payload: currentIngredients,
         id: drinkDetail[0].idDrink });
       history.push(`/bebidas/${drinkDetail[0].idDrink}/in-progress`);
     }
-  }
-
-  function startOrContinue() {
-    if (drinks && !drinks[drinkDetail[0].idDrink]) return 'Iniciar Receita';
-    return 'Continuar Receita';
   }
 
   return (
@@ -81,7 +76,8 @@ function DetalhesBebida() {
             className="start-recipe-btn"
             data-testid="start-recipe-btn"
           >
-            { startOrContinue() }
+            { (!cocktails[drinkDetail[0]
+              .idDrink]) ? 'Iniciar Receita' : 'Continuar Receita' }
           </button>
         </>
       ) }

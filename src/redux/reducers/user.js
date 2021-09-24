@@ -1,5 +1,5 @@
 const inProgress = (!JSON.parse(localStorage
-  .getItem('inProgressRecipes'))) ? { meals: {}, drinks: {} } : JSON
+  .getItem('inProgressRecipes'))) ? { meals: {}, cocktails: {} } : JSON
     .parse(localStorage.getItem('inProgressRecipes'));
 
 const favoriteRecipes = (!JSON.parse(localStorage
@@ -24,7 +24,7 @@ const user = (state = INITIAL_STATE, action) => {
     return { ...state,
       inProgress: {
         ...state.inProgress,
-        drinks: { ...state.inProgress.drinks, [action.id]: [...action.payload] },
+        cocktails: { ...state.inProgress.cocktails, [action.id]: [...action.payload] },
       } };
   case 'CURRENT_INGREDIENTS':
     return { ...state, currentIngredients: action.payload };
