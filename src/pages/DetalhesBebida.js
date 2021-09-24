@@ -32,13 +32,17 @@ function DetalhesBebida() {
   }, [idRequest]);
 
   function addInProgress() {
-    const verify = drinks[drinkDetail[0].idDrink];
-    if (!verify) {
+    if (!drinks[drinkDetail[0].idDrink]) {
       dispatch({ type: 'DRINK_IN_PROGRESS',
         payload: currentIngredients,
         id: drinkDetail[0].idDrink });
+      history.push(`/bebidas/${drinkDetail[0].idDrink}/in-progress`);
     }
-    history.push(`/bebidas/${drinkDetail[0].idDrink}/in-progress`);
+  }
+
+  function startOrContinue() {
+    if (drinks && !drinks[drinkDetail[0].idDrink]) return 'Iniciar Receita';
+    return 'Continuar Receita';
   }
 
   return (
@@ -77,8 +81,7 @@ function DetalhesBebida() {
             className="start-recipe-btn"
             data-testid="start-recipe-btn"
           >
-            { (!drinks[drinkDetail[0]
-              .idDrink]) ? 'Iniciar Receita' : 'Continuar Receita' }
+            { startOrContinue() }
           </button>
         </>
       ) }
