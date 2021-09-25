@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router';
+import { useRouteMatch, useHistory } from 'react-router';
 import IngredientListProgress from '../components/ingredientListProgress';
 import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
 // import PropTypes from 'prop-types';
@@ -8,6 +8,7 @@ function ComidaEmProcesso() {
   const [mealDetail, setMealDetail] = useState();
   const [enableButton, setEnableButton] = useState(true);
   const match = useRouteMatch();
+  const history = useHistory();
 
   const { id: idRequest } = match.params;
 
@@ -47,7 +48,7 @@ function ComidaEmProcesso() {
           />
           <p data-testid="instructions">{ mealDetail[0].strInstructions }</p>
           <button
-            onClick={ () => console.log('a') }
+            onClick={ () => history.push('/receitas-feitas')  }
             disabled={ enableButton }
             type="button"
             className="finish-recipe-btn"

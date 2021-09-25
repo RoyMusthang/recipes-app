@@ -4,12 +4,11 @@ import { useDispatch } from 'react-redux';
 
 function IngredientList({ eatableDetail, setEnableButton }) {
   const dispatch = useDispatch();
-  const [ingredients] = useState([]);
-
-  // const [count, setCount] = useState([]);
+  const ingredients = [];
+  const [count, setCount] = useState(0);
 
   if (eatableDetail && eatableDetail.length !== 0) {
-    for (let i = 1; i <= Number('20'); i += 1) {
+    for (let i = 1; i <= Number('15'); i += 1) {
       if (eatableDetail[0][`strIngredient${i}`]) {
         const ing = `${eatableDetail[0][`strIngredient${i}`]}`;
         const mes = `${eatableDetail[0][`strMeasure${i}`]}`;
@@ -18,9 +17,14 @@ function IngredientList({ eatableDetail, setEnableButton }) {
     }
   }
 
+  if (ingredients.length === count) {
+    setEnableButton(false);
+    // comparador que habilita o botão
+  }
+
   useEffect(() => {
     dispatch({ type: 'CURRENT_INGREDIENTS', payload: ingredients });
-  }, [dispatch, ingredients]);
+  }, [dispatch]);
 
   return (
     <ul>
@@ -33,12 +37,18 @@ function IngredientList({ eatableDetail, setEnableButton }) {
             type="checkbox"
             id={ i }
             name={ i }
-            onChange={ () => console.log('teste') }
+            onChange={ ({ target }) => {
+              // logica para saber a quantidade de inputs checkados 
+              if (target.checked) {
+                setCount((prev) => prev + 1);
+              } else {
+                setCount((prev) => prev - 1);
+              }
+            } }
           />
           <label htmlFor={ i }>{ ingredient }</label>
         </li>
       )) }
-      {console.log(ingredients.length)}
     </ul>
   );
 }
