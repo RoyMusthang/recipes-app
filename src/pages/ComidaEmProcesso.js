@@ -48,7 +48,7 @@ function ComidaEmProcesso() {
           />
           <p data-testid="instructions">{ mealDetail[0].strInstructions }</p>
           <button
-            onClick={ () => history.push('/receitas-feitas')  }
+            onClick={ () => history.push('/receitas-feitas') }
             disabled={ enableButton }
             type="button"
             className="finish-recipe-btn"
