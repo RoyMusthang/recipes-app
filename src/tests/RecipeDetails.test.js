@@ -5,11 +5,11 @@ import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
 describe('Página de detalhes das receitas', () => {
-  const recipePhotoTestId = 'recipe-photo';
-  const recipeTitleTestId = 'recipe-title';
-  const shareBtnTestId = 'share-btn';
-  const favoriteBtnTestId = 'favorite-btn';
-  const recipeCategoryTestId = 'recipe-category';
+const recipePhotoTestId = 'recipe-photo';
+const recipeTitleTestId = 'recipe-title';
+const shareBtnTestId = 'share-btn';
+const favoriteBtnTestId = 'favorite-btn';
+const recipeCategoryTestId = 'recipe-category';
   const ingredientNameMeasureTestId = '0-ingredient-name-and-measure';
   const instructionsTestId = 'instructions';
   const videoTestId = 'video';
