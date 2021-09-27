@@ -67,7 +67,7 @@ function DetalhesComida() {
             {randoms.filter((_, i2) => (i2 < Number('6'))).map((item, i) => (
               <div key={ `${i}-${item}` } data-testid={ `${i}-recomendation-card` }>
                 <h4 data-testid={ `${i}-recomendation-title` }>{ item.strDrink }</h4>
-                <img src={ item.strDrinkThumb } alt="Bebida Recomendada" width="150px" />
+                <img src={ item.strDrinkThumb } alt="Comida Recomendada" width="150px" />
               </div>
             ))}
           </div>
@@ -77,7 +77,8 @@ function DetalhesComida() {
             className="start-recipe-btn"
             data-testid="start-recipe-btn"
           >
-            { (!meals[mealDetail[0].idMeal]) ? 'Iniciar Receita' : 'Continuar Receita' }
+            { (!meals[mealDetail[0]
+              .idMeal]) ? 'Iniciar Receita' : 'Continuar Receita' }
           </button>
         </>
       ) }
