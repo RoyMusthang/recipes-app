@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-function IngredientList({ eatableDetail, setEnableButton }) {
-  const dispatch = useDispatch();
-  const ingredients = [];
-  const [count, setCount] = useState(0);
-
+const listDetails = (eatableDetail, ingredients) => {
   if (eatableDetail && eatableDetail.length !== 0) {
     for (let i = 1; i <= Number('15'); i += 1) {
       if (eatableDetail[0][`strIngredient${i}`]) {
@@ -16,15 +12,25 @@ function IngredientList({ eatableDetail, setEnableButton }) {
       } else break;
     }
   }
+};
+
+function IngredientListProgress({ eatableDetail, setEnableButton }) {
+  const dispatch = useDispatch();
+  const ingredients = [];
+  const [count, setCount] = useState(0);
+
+  listDetails(eatableDetail, ingredients);
 
   if (ingredients.length === count) {
     setEnableButton(false);
     // comparador que habilita o botão
+  } else {
+    setEnableButton(true);
   }
 
-  useEffect(() => {
+  useMemo(() => {
     dispatch({ type: 'CURRENT_INGREDIENTS', payload: ingredients });
-  }, [dispatch]);
+  }, [dispatch, ingredients]);
 
   return (
     <ul>
@@ -38,10 +44,12 @@ function IngredientList({ eatableDetail, setEnableButton }) {
             id={ i }
             name={ i }
             onChange={ ({ target }) => {
-              // logica para saber a quantidade de inputs checkados 
+              // logica para saber a quantidade de inputs checkados
               if (target.checked) {
+                console.log('aumentou');
                 setCount((prev) => prev + 1);
               } else {
+                console.log('diminuiu');
                 setCount((prev) => prev - 1);
               }
             } }
@@ -53,8 +61,8 @@ function IngredientList({ eatableDetail, setEnableButton }) {
   );
 }
 
-IngredientList.propTypes = {
+IngredientListProgress.propTypes = {
   eatableDetail: PropTypes.array,
 }.isRequired;
 
-export default IngredientList;
+export default IngredientListProgress;
