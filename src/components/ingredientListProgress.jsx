@@ -1,62 +1,81 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-const listDetails = (eatableDetail, ingredients) => {
+const listDetails = (eatableDetail, setIngredients) => {
   if (eatableDetail && eatableDetail.length !== 0) {
+    const arrayPush = [];
     for (let i = 1; i <= Number('15'); i += 1) {
       if (eatableDetail[0][`strIngredient${i}`]) {
         const ing = `${eatableDetail[0][`strIngredient${i}`]}`;
         const mes = `${eatableDetail[0][`strMeasure${i}`]}`;
-        ingredients.push(`${ing} ${(mes === 'null') ? '' : mes}`);
+        arrayPush.push(`${ing} ${(mes === 'null') ? '' : mes}`);
       } else break;
     }
+    setIngredients(arrayPush);
   }
 };
 
-function IngredientListProgress({ eatableDetail, setEnableButton }) {
+function IngredientListProgress({ eatableDetail, setEnableButton,
+  inProgressIngredients, dispatchEatable, idEatable }) {
   const dispatch = useDispatch();
-  const ingredients = [];
-  const [count, setCount] = useState(0);
+  const [ingredients, setIngredients] = useState([]);
 
-  listDetails(eatableDetail, ingredients);
+  if (ingredients.length === 0) listDetails(eatableDetail, setIngredients);
 
-  if (ingredients.length === count) {
+  if (inProgressIngredients && inProgressIngredients.length === 0) {
     setEnableButton(false);
     // comparador que habilita o botão
   } else {
     setEnableButton(true);
   }
 
-  useMemo(() => {
-    dispatch({ type: 'CURRENT_INGREDIENTS', payload: ingredients });
-  }, [dispatch, ingredients]);
+  useEffect(() => {
+    if (!inProgressIngredients) {
+      dispatch({ type: dispatchEatable, id: idEatable, payload: ingredients });
+    }
+  }, [dispatch, inProgressIngredients, ingredients, dispatchEatable, idEatable]);
 
+  console.log(inProgressIngredients);
+  // console.log(idEatable);
+  const loading = <li>Loading...</li>;
   return (
     <ul>
-      { ingredients.map((ingredient, i) => (
-        <li
-          key={ `${i}-${ingredient}` }
-          data-testid="ingredient-step"
-        >
-          <input
-            type="checkbox"
-            id={ i }
-            name={ i }
-            onChange={ ({ target }) => {
-              // logica para saber a quantidade de inputs checkados
-              if (target.checked) {
-                console.log('aumentou');
-                setCount((prev) => prev + 1);
-              } else {
-                console.log('diminuiu');
-                setCount((prev) => prev - 1);
-              }
-            } }
-          />
-          <label htmlFor={ i }>{ ingredient }</label>
-        </li>
-      )) }
+      { (!inProgressIngredients) ? loading : ingredients.map((ingredient, i) => {
+        const isChecked = !(inProgressIngredients.includes(ingredient));
+        return (
+          <li
+            key={ `${i}-${ingredient}` }
+            data-testid={ `${i}-ingredient-step` }
+          >
+            <input
+              checked={ isChecked }
+              type="checkbox"
+              id={ ingredient }
+              name={ i }
+              onChange={ ({ target: { checked, id } }) => {
+                // logica para saber a quantidade de inputs checkados
+                // e alterar os ingredientes inProgress no redux e,
+                // consequentemente, no localStorage
+                if (checked) {
+                  const filteredIngredients = inProgressIngredients
+                    .filter((ing) => ing !== id);
+                  dispatch({ type: dispatchEatable,
+                    id: idEatable,
+                    payload: filteredIngredients });
+                } else {
+                  const filteredIngredients = inProgressIngredients.concat(id);
+                  dispatch({ type: dispatchEatable,
+                    id: idEatable,
+                    payload: filteredIngredients });
+                }
+              } }
+            />
+            <label htmlFor={ i }>{ ingredient }</label>
+          </li>
+
+        );
+      }) }
     </ul>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouteMatch, useHistory } from 'react-router';
 import IngredientListProgress from '../components/ingredientListProgress';
 import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
@@ -9,6 +10,7 @@ function BebidaEmProgresso() {
   const [enableButton, setEnableButton] = useState(true);
   const match = useRouteMatch();
   const history = useHistory();
+  const { inProgress } = useSelector((state) => state.user);
 
   const { id: idRequest } = match.params;
 
@@ -34,7 +36,7 @@ function BebidaEmProgresso() {
           />
           <h2 data-testid="recipe-title">{ drinkDetail[0].strdrink }</h2>
           <ShareAndFavoriteButtons
-            id={ drinkDetail[0].iddrink }
+            id={ drinkDetail[0].idDrink }
             type="comida"
             area={ drinkDetail[0].strArea }
             category={ drinkDetail[0].strCategory }
@@ -45,6 +47,9 @@ function BebidaEmProgresso() {
           <IngredientListProgress
             eatableDetail={ drinkDetail }
             setEnableButton={ setEnableButton }
+            inProgressIngredients={ inProgress.cocktails[drinkDetail[0].idDrink] }
+            idEatable={ drinkDetail[0].idDrink }
+            dispatchEatable="DRINK_IN_PROGRESS"
           />
           <p data-testid="instructions">{ drinkDetail[0].strInstructions }</p>
           <button
