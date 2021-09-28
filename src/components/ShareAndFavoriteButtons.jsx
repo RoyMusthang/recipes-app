@@ -1,6 +1,5 @@
 import copy from 'clipboard-copy';
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -9,8 +8,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
 function ShareAndFavoriteButtons({ id, type, area = '', category, name,
-  image, alcoholicOrNot = '' }) {
-  const { pathname } = useLocation();
+  image, alcoholicOrNot = '', index }) {
   const dispatch = useDispatch();
   const { favoriteRecipes } = useSelector((state) => state.user);
   const [copiedText, setCopiedText] = useState(false);
@@ -30,10 +28,11 @@ function ShareAndFavoriteButtons({ id, type, area = '', category, name,
   return (
     <>
       { (copiedText) && (<h3>Link copiado!</h3>) }
+      { console.log(type)}
       <button
+        data-testid={ `${index}-horizontal-share-btn` }
         onClick={ () => {
-          console.log(pathname);
-          copy(`http://localhost:3000${pathname}`);
+          copy('http://localhost:3000/' + type + 's/' + id);
           setCopiedText(true);
         } }
         type="button"
@@ -45,6 +44,7 @@ function ShareAndFavoriteButtons({ id, type, area = '', category, name,
         />
       </button>
       <button
+        data-testid={ `${index}-horizontal-favorite-btn` }
         onClick={ dispatchFavorite }
         type="button"
       >
