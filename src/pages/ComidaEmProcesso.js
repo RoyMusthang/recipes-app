@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useRouteMatch, useHistory } from 'react-router';
 import IngredientListProgress from '../components/ingredientListProgress';
 import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
@@ -9,6 +10,7 @@ function ComidaEmProcesso() {
   const [enableButton, setEnableButton] = useState(true);
   const match = useRouteMatch();
   const history = useHistory();
+  const { inProgress } = useSelector((state) => state.user);
 
   const { id: idRequest } = match.params;
 
@@ -45,6 +47,9 @@ function ComidaEmProcesso() {
           <IngredientListProgress
             eatableDetail={ mealDetail }
             setEnableButton={ setEnableButton }
+            inProgressIngredients={ inProgress.meals[mealDetail[0].idMeal] }
+            idEatable={ mealDetail[0].idMeal }
+            dispatchEatable="MEAL_IN_PROGRESS"
           />
           <p data-testid="instructions">{ mealDetail[0].strInstructions }</p>
           <button

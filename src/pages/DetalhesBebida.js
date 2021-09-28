@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import IngredientList from '../components/IngredientList';
@@ -13,9 +14,8 @@ function DetalhesBebida() {
   const { id: idRequest } = match.params;
   const [drinkDetail, setDrinkDetail] = useState([]);
   const [randoms, setRandoms] = useState([]);
-  const dispatch = useDispatch();
-  const { inProgress: { cocktails }, currentIngredients,
-  } = useSelector((state) => state.user);
+  // const dispatch = useDispatch();
+  const { inProgress: { cocktails } } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -33,9 +33,10 @@ function DetalhesBebida() {
 
   function addInProgress() {
     if (!cocktails[drinkDetail[0].idDrink]) {
-      dispatch({ type: 'DRINK_IN_PROGRESS',
-        payload: currentIngredients,
-        id: drinkDetail[0].idDrink });
+      // const currentIngredients =
+      // dispatch({ type: 'DRINK_IN_PROGRESS',
+      //   payload: currentIngredients,
+      //   id: drinkDetail[0].idDrink });
       history.push(`/bebidas/${drinkDetail[0].idDrink}/in-progress`);
     }
   }

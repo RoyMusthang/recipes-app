@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import IngredientList from '../components/IngredientList';
@@ -13,9 +14,8 @@ function DetalhesComida() {
   const { id: idRequest } = match.params;
   const [mealDetail, setMealDetail] = useState([]);
   const [randoms, setRandoms] = useState([]);
-  const dispatch = useDispatch();
-  const { inProgress: { meals }, currentIngredients,
-  } = useSelector((state) => state.user);
+  // const dispatch = useDispatch();
+  const { inProgress: { meals } } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -32,11 +32,11 @@ function DetalhesComida() {
   }, [idRequest]);
 
   function addInProgress() {
-    if (!meals[mealDetail[0].idMeal]) {
-      dispatch({ type: 'MEAL_IN_PROGRESS',
-        payload: currentIngredients,
-        id: mealDetail[0].idMeal });
-    }
+    // if (!meals[mealDetail[0].idMeal]) {
+    //   dispatch({ type: 'MEAL_IN_PROGRESS',
+    //     payload: currentIngredients,
+    //     id: mealDetail[0].idMeal });
+    // }
     history.push(`/comidas/${mealDetail[0].idMeal}/in-progress`);
   }
 

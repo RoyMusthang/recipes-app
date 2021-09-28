@@ -9,7 +9,6 @@ const favoriteRecipes = (!JSON.parse(localStorage
 const INITIAL_STATE = {
   inProgress,
   favoriteRecipes,
-  currentIngredients: [],
 };
 
 const user = (state = INITIAL_STATE, action) => {
@@ -26,8 +25,6 @@ const user = (state = INITIAL_STATE, action) => {
         ...state.inProgress,
         cocktails: { ...state.inProgress.cocktails, [action.id]: [...action.payload] },
       } };
-  case 'CURRENT_INGREDIENTS':
-    return { ...state, currentIngredients: action.payload };
   case 'FAVORITE':
     return { ...state, favoriteRecipes: [...state.favoriteRecipes, action.payload] };
   case 'REMOVE_FAVORITE':
