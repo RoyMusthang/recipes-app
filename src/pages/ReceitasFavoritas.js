@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
 import { useSelector } from 'react-redux';
+import Header from '../components/Header';
 import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
 
 const ifTypeComida = (index, area, category) => (
@@ -23,7 +23,7 @@ const ifTypeBebida = (index, category, alcoholicOrNot) => (
 );
 
 function ReceitasFavoritas() {
-  const { favoriteRecipes } = useSelector((state) => state.user)
+  const { favoriteRecipes } = useSelector((state) => state.user);
   const [finished, setFinished] = useState(favoriteRecipes);
 
   const onClick = ({ target: { name } }) => {
@@ -35,7 +35,7 @@ function ReceitasFavoritas() {
   return (
     <div>
       <Header title="Receitas Favoritas" renderSearchButton={ false } />
-		 <div>
+      <div>
         <button
           type="button"
           data-testid="filter-by-all-btn"
@@ -67,8 +67,8 @@ function ReceitasFavoritas() {
             <ShareAndFavoriteButtons
               id={ item.id }
               index={ index }
-              type={item.type}
-              name={ item.name}
+              type={ item.type }
+              name={ item.name }
               image={ item.image }
             />
             <Link to={ `/${item.type}s/${item.id}` }>
@@ -93,10 +93,9 @@ function ReceitasFavoritas() {
           </>
         ))}
       </div>
-	  </div>
+    </div>
   );
 }
-
 
 // }.isRequired;
 // favoriteRecipes:"[{"id":"15346","type":"bebida","area":"","category":"Cocktail","name":"155 Belmont","image":"https://www.thecocktaildb.com/images/media/drink/yqvvqs1475667388.jpg","alcoholicOrNot":"Alcoholic"},{"id":"13501","type":"bebida","area":"","category":"Shot","name":"ABC","image":"https://www.thecocktaildb.com/images/media/drink/tqpvqp1472668328.jpg","alcoholicOrNot":"Alcoholic"},{"id":"52977","type":"comida","area":"Turkish","category":"Side","name":"Corba","image":"https://www.themealdb.com/images/media/meals/58oia61564916529.jpg","alcoholicOrNot":""}]"

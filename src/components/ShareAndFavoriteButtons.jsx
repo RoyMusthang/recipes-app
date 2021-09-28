@@ -32,7 +32,7 @@ function ShareAndFavoriteButtons({ id, type, area = '', category, name,
       <button
         data-testid={ `${index}-horizontal-share-btn` }
         onClick={ () => {
-          copy('http://localhost:3000/' + type + 's/' + id);
+          copy(`http://localhost:3000/${type}s/${id}`);
           setCopiedText(true);
         } }
         type="button"
