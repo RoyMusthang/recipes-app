@@ -1,2 +1,3 @@
 Login => Josue Lobo
-Header => 
+Header => Bruno Pinho
+Receitas feitas => Gabriel Gaspar (Grupo 22)
