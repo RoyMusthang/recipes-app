@@ -37,11 +37,11 @@ function BebidaEmProgresso() {
           <h2 data-testid="recipe-title">{ drinkDetail[0].strdrink }</h2>
           <ShareAndFavoriteButtons
             id={ drinkDetail[0].idDrink }
-            type="comida"
-            area={ drinkDetail[0].strArea }
+            type="bebida"
+            alcoholicOrNot={ drinkDetail[0].strAlcoholic }
             category={ drinkDetail[0].strCategory }
-            name={ drinkDetail[0].strdrink }
-            image={ drinkDetail[0].strdrinkThumb }
+            name={ drinkDetail[0].strDrink }
+            image={ drinkDetail[0].strDrinkThumb }
           />
           <h4 data-testid="recipe-category">{ drinkDetail[0].strCategory }</h4>
           <IngredientListProgress

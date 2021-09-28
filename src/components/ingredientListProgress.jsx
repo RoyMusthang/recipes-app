@@ -36,8 +36,6 @@ function IngredientListProgress({ eatableDetail, setEnableButton,
     }
   }, [dispatch, inProgressIngredients, ingredients, dispatchEatable, idEatable]);
 
-  console.log(inProgressIngredients);
-  // console.log(idEatable);
   const loading = <li>Loading...</li>;
   return (
     <ul>
