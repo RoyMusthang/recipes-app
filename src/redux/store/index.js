@@ -4,4 +4,9 @@ import rootReducers from '../reducers';
 
 const store = createStore(rootReducers, composeWithDevTools());
 
+store.subscribe(() => {
+  localStorage.inProgressRecipes = JSON.stringify(store.getState().user.inProgress);
+  localStorage.favoriteRecipes = JSON.stringify(store.getState().user.favoriteRecipes);
+});
+
 export default store;

@@ -1,0 +1,16 @@
+.recomendation-container {
+  display: flex;
+  height: 250px;
+  overflow-x: scroll;
+  padding: 10px;
+  width: 360px;
+}
+
+.recomendation-container div {
+  margin-left: 50px;
+}
+
+.start-recipe-btn {
+  bottom: 0;
+  position: fixed;
+}

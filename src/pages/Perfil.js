@@ -1,10 +1,13 @@
 import React from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 // import PropTypes from 'prop-types';
 
 function Perfil() {
   return (
     <div>
-      This is A Perfil
+      <Header title="Perfil" renderSearchButton={ false } />
+      <Footer />
     </div>
   );
 }
