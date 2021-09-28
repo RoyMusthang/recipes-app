@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
@@ -15,12 +15,14 @@ describe('Página de detalhes das receitas', () => {
   const videoTestId = 'video';
   const recomendationCardTestId = '0-recomendation-card';
   const startRecipeBtnTestId = 'start-recipe-btn';
+  const comidasURL = '/comidas/52771';
+  const bebidasURL = '/bebidas/178319';
 
   describe('Tela de comidas ', () => {
     it('Deve possuir todos os atributos data-testid', async () => {
       const { history } = renderWithRouterAndRedux(<App />);
 
-      history.push('/comidas/52771');
+      history.push(comidasURL);
 
       const recipePhoto = await screen.findByTestId(recipePhotoTestId);
       const title = await screen.findByTestId(recipeTitleTestId);
@@ -44,13 +46,37 @@ describe('Página de detalhes das receitas', () => {
       expect(startRecipeBtn).toBeInTheDocument();
       expect(video).toBeInTheDocument();
     });
+
+    it('Deve ir para In Progress quando clicar em Iniciar Receita', async () => {
+      const { history } = renderWithRouterAndRedux(<App />);
+
+      history.push(comidasURL);
+
+      const startRecipeBtn = await screen.findByTestId(startRecipeBtnTestId);
+
+      expect(startRecipeBtn).toBeInTheDocument();
+      expect(startRecipeBtn).toHaveTextContent('Iniciar Receita');
+
+      userEvent.click(startRecipeBtn);
+
+      const { pathname } = history.location;
+
+      expect(pathname).toBe('/comidas/52771/in-progress');
+
+      history.push(comidasURL);
+
+      const continueBtn = await screen.findByRole('button',
+        { name: 'Continuar Receita' });
+
+      expect(continueBtn).toBeInTheDocument();
+    });
   });
 
   describe('Tela de bebidas ', () => {
     it('Deve possuir todos os atributos data-testid', async () => {
       const { history } = renderWithRouterAndRedux(<App />);
 
-      history.push('/bebidas/178319');
+      history.push(bebidasURL);
 
       const recipePhoto = await screen.findByTestId(recipePhotoTestId);
       const title = await screen.findByTestId(recipeTitleTestId);
@@ -73,20 +99,49 @@ describe('Página de detalhes das receitas', () => {
       expect(startRecipeBtn).toBeInTheDocument();
     });
 
-    // it('Deve ter os ingredientes e medidas', async () => {
-    //   //  https://www.leighhalliday.com/mock-fetch-jest
-    //   global.fetch = jest.fn(() => Promise.resolve({
-    //     json: () => Promise.resolve(oneMeal),
-    //   }));
-    //   const { history } = renderWithRouterAndRedux(<App />);
+    it('Deve ir para In Progress quando clicar em Iniciar Receita', async () => {
+      const { history } = renderWithRouterAndRedux(<App />);
 
-    //   history.push('/comidas/52771');
+      history.push(bebidasURL);
 
-    //   const firstIngredient = await screen.findByTestId(ingredientNameMeasureTestId);
+      const startRecipeBtn = await screen.findByTestId(startRecipeBtnTestId);
 
-    //   expect(firstIngredient).toBeInTheDocument();
-    //   expect(firstIngredient).toHaveTextContent('penne rigate 1 pound');
+      expect(startRecipeBtn).toBeInTheDocument();
+      expect(startRecipeBtn).toHaveTextContent('Iniciar Receita');
 
-    // });
+      userEvent.click(startRecipeBtn);
+
+      const { pathname } = history.location;
+
+      expect(pathname).toBe('/bebidas/178319/in-progress');
+
+      history.push(bebidasURL);
+
+      const continueBtn = await screen.findByRole('button',
+        { name: 'Continuar Receita' });
+
+      expect(continueBtn).toBeInTheDocument();
+    });
+
+    /*
+    Tentativa de cobrir a linha 36 dos arquivos de detalhe:
+
+    it('Deve ter os ingredientes e medidas', async () => {
+      //  https://www.leighhalliday.com/mock-fetch-jest
+      global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(oneMeal),
+      }));
+      const { history } = renderWithRouterAndRedux(<App />);
+
+      history.push(comidasURL);
+
+      const firstIngredient = await screen.findByTestId(ingredientNameMeasureTestId);
+
+      expect(firstIngredient).toBeInTheDocument();
+      expect(firstIngredient).toHaveTextContent('penne rigate 1 pound');
+
+    });
+
+    */
   });
 });

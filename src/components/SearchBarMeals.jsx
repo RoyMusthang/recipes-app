@@ -1,5 +1,3 @@
-/* eslint-disable no-alert */
-
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -13,7 +11,7 @@ export default function SearchBarMeals() {
 
   const getSearch = async () => {
     if (radioState === 'first-letter-radio' && input.length > 1) {
-      alert('Sua busca deve conter somente 1 (um) caracter');
+      global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       const payload = await getMeals(input, radioState);
       if (payload.meals !== null) {
@@ -22,7 +20,7 @@ export default function SearchBarMeals() {
           history.push(`/comidas/${payload.meals[0].idMeal}`);
         }
       } else {
-        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
         dispatch({ type: 'MEALS_REQUESTS_ERROR', error: 'Não existe' });
       }
     }
