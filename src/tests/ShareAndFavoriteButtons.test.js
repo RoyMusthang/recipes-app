@@ -39,8 +39,6 @@ describe('Botões de favoritar e compartilhar', () => {
       userEvent.click(favBtn);
 
       expect(favBtn).toHaveAttribute('src', 'whiteHeartIcon.svg');
-
-      expect(favBtn).toHaveAttribute('onClick');
     });
   });
 
