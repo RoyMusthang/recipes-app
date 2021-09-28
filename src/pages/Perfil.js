@@ -6,18 +6,23 @@ import Footer from '../components/Footer';
 
 function Perfil() {
   const history = useHistory();
-  const emailLocalStorage = JSON.parse(localStorage.getItem('user')).email;
+  const emailLocalStorage = JSON.parse(localStorage.getItem('user'));
 
   function logout() {
     localStorage.clear();
     history.push('/');
   }
 
+  const notEmail = 'Nenhum email registrado';
   return (
     <div>
       <Header title="Perfil" renderSearchButton={ false } />
       <section>
-        <h3 data-testid="profile-email">{ emailLocalStorage }</h3>
+        <h3
+          data-testid="profile-email"
+        >
+          { (!emailLocalStorage) ? notEmail : emailLocalStorage.email }
+        </h3>
         <Link data-testid="profile-done-btn" to="/receitas-feitas">Receitas Feitas</Link>
         <Link
           data-testid="profile-favorite-btn"
