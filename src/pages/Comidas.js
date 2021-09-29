@@ -9,16 +9,20 @@ import ButtonCategoryMeals from '../components/ButtonCategoryMeals';
 
 function Comidas() {
   const dispatch = useDispatch();
+  const { allMeals, defaultURL } = useSelector((state) => state.meals);
   useEffect(() => {
     async function fetchApi() {
-      const api = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const api = await fetch(defaultURL);
       const json = await api.json();
       dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
     }
     fetchApi();
-  }, [dispatch]);
+    return () => {
+      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      dispatch({ type: 'MEAL_URL', payload: url });
+    };
+  }, [dispatch, defaultURL]);
 
-  const { allMeals } = useSelector((state) => state.meals);
   return (
     <div>
       <Header title="Comidas" mealOrDrink="meal" />
