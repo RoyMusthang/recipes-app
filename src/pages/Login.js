@@ -5,8 +5,8 @@ import {
   ButtonLogin,
   FormLogin,
   DivLogin,
-  DivBackgroundLogin
-}  from '../styles/styles.js';
+  DivBackgroundLogin,
+} from '../styles/styles';
 // import PropTypes from 'prop-types';
 
 function Login() {
@@ -47,14 +47,14 @@ function Login() {
             value={ email }
             onChange={ (event) => setEmail(event.target.value) }
             data-testid="email-input"
-            placeholder='Insira seu email'
+            placeholder="Insira seu email"
           />
           <Input
             type="password"
             data-testid="password-input"
             value={ password }
             onChange={ (event) => setPassword(event.target.value) }
-            placeholder='Insira sua senha'
+            placeholder="Insira sua senha"
           />
           <ButtonLogin
             type="submit"

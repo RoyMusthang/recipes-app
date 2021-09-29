@@ -11,6 +11,8 @@ const { getByTestId, queryByTestId } = screen;
 const arrabiata = 'Spicy Arrabiata Penne';
 const zeroName = '0-horizontal-name';
 const oneName = '1-horizontal-name';
+const filterAllBtn = 'filter-by-all-btn';
+const filterDrinkBtn = 'filter-by-drink-btn';
 
 const doneRecipesMock = [
   {
@@ -51,9 +53,9 @@ describe('Done recipes screen', () => {
   });
 
   it('Todos os data-testids estão disponíveis', () => {
-    expect(getByTestId('filter-by-all-btn')).toBeInTheDocument();
+    expect(getByTestId(filterAllBtn)).toBeInTheDocument();
     expect(getByTestId('filter-by-food-btn')).toBeInTheDocument();
-    expect(getByTestId('filter-by-drink-btn')).toBeInTheDocument();
+    expect(getByTestId(filterDrinkBtn)).toBeInTheDocument();
     expect(getByTestId('0-horizontal-image')).toBeInTheDocument();
     expect(getByTestId('0-horizontal-top-text')).toBeInTheDocument();
     expect(getByTestId(zeroName)).toBeInTheDocument();
@@ -69,9 +71,9 @@ describe('Done recipes screen', () => {
   });
 
   it('Verifica que os filtros funcionam', async () => {
-    const allFilter = getByTestId('filter-by-all-btn');
+    const allFilter = getByTestId(filterAllBtn);
     const foodsFilter = getByTestId('filter-by-food-btn');
-    const drinksFilter = getByTestId('filter-by-drink-btn');
+    const drinksFilter = getByTestId(filterDrinkBtn);
 
     userEvent.click(foodsFilter);
     await sleep();
@@ -95,9 +97,9 @@ describe('Done recipes screen', () => {
   });
 
   it('Verifica a funcionalidade do botão \'All\'', async () => {
-    const drinkButton = await screen.findByTestId('filter-by-drink-btn');
+    const drinkButton = await screen.findByTestId(filterDrinkBtn);
     userEvent.click(drinkButton);
-    const allButton = await screen.findByTestId('filter-by-all-btn');
+    const allButton = await screen.findByTestId(filterAllBtn);
     userEvent.click(allButton);
 
     expect(1 + 1).toBe(2);
