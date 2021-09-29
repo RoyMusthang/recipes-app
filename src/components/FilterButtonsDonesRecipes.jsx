@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FilterButtonsDonesRecipes({ finished, setFinished, doneRecipes }) {
+function FilterButtonsDonesRecipes({ finished, setFinished }) {
   const onClick = ({ target: { name } }) => {
     const filtroDeReceitas = finished.filter((item) => item.type.includes(name));
     setFinished(filtroDeReceitas);
-    if (name === 'All') return setFinished(doneRecipes);
+    if (name === 'All') {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      return setFinished(doneRecipes);
+    }
   };
   return (
     <>
@@ -39,7 +42,6 @@ function FilterButtonsDonesRecipes({ finished, setFinished, doneRecipes }) {
 
 FilterButtonsDonesRecipes.propTypes = {
   finished: PropTypes.array,
-  doneRecipes: PropTypes.array,
   setFinished: PropTypes.func,
 }.isRequired;
 

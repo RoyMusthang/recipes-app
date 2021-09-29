@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch, useHistory } from 'react-router';
 import IngredientListProgress from '../components/ingredientListProgress';
 import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
 // import PropTypes from 'prop-types';
 
 function BebidaEmProgresso() {
-  const [drinkDetail, setDrinkDetail] = useState();
+  const [drinkDetail, setDrinkDetail] = useState([]);
   const [enableButton, setEnableButton] = useState(true);
   const match = useRouteMatch();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { inProgress } = useSelector((state) => state.user);
 
   const { id: idRequest } = match.params;
@@ -23,6 +24,23 @@ function BebidaEmProgresso() {
     };
     fetchApi();
   }, [idRequest]);
+
+  function saveRecipe() {
+    const { idDrink, strDrink, strCategory, strAlcoholicOrNot,
+      strDrinkThumb, strTags } = drinkDetail[0];
+    const tags = (!strTags) ? [] : strTags;
+    const obj = { id: idDrink,
+      name: strDrink,
+      type: 'bebida',
+      area: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholicOrNot,
+      image: strDrinkThumb,
+      doneDate: 'Um dia qualquer (ou mais de um)',
+      tags };
+    dispatch({ type: 'DONE_RECIPE', payload: obj });
+    history.push('/receitas-feitas');
+  }
 
   return (
     <div>
@@ -53,7 +71,7 @@ function BebidaEmProgresso() {
           />
           <p data-testid="instructions">{ drinkDetail[0].strInstructions }</p>
           <button
-            onClick={ () => history.push('/receitas-feitas') }
+            onClick={ saveRecipe }
             disabled={ enableButton }
             type="button"
             className="finish-recipe-btn"
