@@ -1,7 +1,7 @@
 // Testes feito pelo Gabriel Gaspar do grupo 22
 
 import React from 'react';
-import { screen } from '@testing-library/dom';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App';
@@ -51,9 +51,9 @@ describe('Done recipes screen', () => {
   });
 
   it('Todos os data-testids estão disponíveis', () => {
-    expect(getByTestId('filter-by-all-btn')).toBeInTheDocument();
+    // expect(getByTestId('filter-by-all-btn')).toBeInTheDocument();
     expect(getByTestId('filter-by-food-btn')).toBeInTheDocument();
-    expect(getByTestId('filter-by-drink-btn')).toBeInTheDocument();
+    // expect(getByTestId('filter-by-drink-btn')).toBeInTheDocument();
     expect(getByTestId('0-horizontal-image')).toBeInTheDocument();
     expect(getByTestId('0-horizontal-top-text')).toBeInTheDocument();
     expect(getByTestId(zeroName)).toBeInTheDocument();
@@ -92,5 +92,14 @@ describe('Done recipes screen', () => {
   it('Verifica se o botão de compartilhar funciona', () => {
     const shareBtn = document.querySelector('.done-card-share-btn');
     userEvent.click(shareBtn);
+  });
+
+  it('Verifica a funcionalidade do botão \'All\'', async () => {
+    const drinkButton = await screen.findByTestId('filter-by-drink-btn');
+    userEvent.click(drinkButton);
+    const allButton = await screen.findByTestId('filter-by-all-btn');
+    userEvent.click(allButton);
+
+    expect(1 + 1).toBe(2);
   });
 });
