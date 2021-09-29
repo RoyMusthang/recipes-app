@@ -14,7 +14,7 @@ function ComidaOrigem() {
     const fetchRequest = async () => {
       const request = await fetch(urlRequest);
       const json = await request.json();
-      dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json.meals });
+      dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
     };
     fetchRequest();
   }, [dispatch, urlRequest]);
@@ -23,7 +23,7 @@ function ComidaOrigem() {
     <div>
       <Header title="Explorar Origem" mealOrDrink="meal" />
       <AreaDropdown setUrlRequest={ setUrlRequest } />
-      { (allMeals.length !== 0) && allMeals
+      { (allMeals.length !== 0) && allMeals.meals
         .filter((_, index) => index < Number('12'))
         .map((meal, i) => (<MealCard
           id={ i }

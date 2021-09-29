@@ -13,7 +13,7 @@ function Bebidas() {
     async function fetchApi() {
       const api = await fetch(defaultURL);
       const json = await api.json();
-      dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json.drinks });
+      dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json });
     }
     fetchApi();
     return () => {
@@ -27,7 +27,7 @@ function Bebidas() {
       <Header title="Bebidas" mealOrDrink="drink" />
       <main>
         <ButtonCategoryDrinks />
-        { (allDrinks.length !== 0) && allDrinks
+        { (allDrinks.length !== 0) && allDrinks.drinks
           .filter((_, index) => index < Number('12'))
           .map((drink, i) => (<DrinkCard
             id={ i }

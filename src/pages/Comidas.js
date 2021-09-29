@@ -14,7 +14,7 @@ function Comidas() {
     async function fetchApi() {
       const api = await fetch(defaultURL);
       const json = await api.json();
-      dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json.meals });
+      dispatch({ type: 'MEALS_REQUESTS_SUCCESS', payload: json });
     }
     fetchApi();
     return () => {
@@ -28,7 +28,7 @@ function Comidas() {
       <Header title="Comidas" mealOrDrink="meal" />
       <main>
         <ButtonCategoryMeals />
-        { (allMeals.length !== 0) && allMeals
+        { (allMeals.length !== 0) && allMeals.meals
           .filter((_, index) => index < Number('12'))
           .map((meal, i) => (<MealCard
             id={ i }
