@@ -27,26 +27,3 @@ export const ButtonLogin = styled.button`
   background-color: ;
   border-radius: 12px;
 `;
-
-
-// export const = ``;
-// export const = ``;
-// export const = ``;
-
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
-// export const = ``;
