@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import Header from '../components/Header';
+import FilterButtonsDonesRecipes from '../components/FilterButtonsDonesRecipes';
 // import PropTypes from 'prop-types';
 
 const doneRecipes = [
@@ -54,17 +55,17 @@ function ReceitasFeitas() {
   // useEffect(() => {
   //   localStorage.getItem(doneRecipes);
   // }, []);
-  const onClick = ({ target: { name } }) => {
-    const filtroDeReceitas = finished.filter((item) => item.type.includes(name));
-    setFinished(filtroDeReceitas);
-    if (name === 'All') return setFinished(doneRecipes);
-  };
+  // const onClick = ({ target: { name } }) => {
+  //   const filtroDeReceitas = finished.filter((item) => item.type.includes(name));
+  //   setFinished(filtroDeReceitas);
+  //   if (name === 'All') return setFinished(doneRecipes);
+  // };
 
   return (
     <div>
       <Header title="Receitas Feitas" renderSearchButton={ false } />
       <div>
-        <button
+        {/* <button
           type="button"
           data-testid="filter-by-all-btn"
           name="All"
@@ -87,7 +88,12 @@ function ReceitasFeitas() {
           onClick={ onClick }
         >
           Drinks
-        </button>
+        </button> */}
+        <FilterButtonsDonesRecipes
+          finished={ finished }
+          setFinished={ setFinished }
+          doneRecipes={ doneRecipes }
+        />
         {finished.map((item, index) => (
           <>
             <Link to={ `/${item.type}s/${item.id}` }>
