@@ -20,6 +20,7 @@ import {
   Perfil,
   ReceitasFeitas,
   ReceitasFavoritas,
+  NotFound,
 } from './pages';
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
       <Route exact path="/explorar/comidas/area" component={ ComidaOrigem } />
       <Route exact path="/comidas/:id/in-progress" component={ ComidaEmProcesso } />
       <Route exact path="/bebidas/:id/in-progress" component={ BebidaEmProgresso } />
+      <Route path="*" component={ NotFound } />
     </Switch>
   );
 }

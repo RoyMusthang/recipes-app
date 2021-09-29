@@ -8,22 +8,26 @@ import ButtonCategoryDrinks from '../components/ButtonCategoryDrinks';
 
 function Bebidas() {
   const dispatch = useDispatch();
+  const { allDrinks, defaultURL } = useSelector((state) => state.drinks);
   useEffect(() => {
     async function fetchApi() {
-      const api = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const api = await fetch(defaultURL);
       const json = await api.json();
-      dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json });
+      dispatch({ type: 'DRINKS_REQUESTS_SUCCESS', payload: json.drinks });
     }
     fetchApi();
-  }, [dispatch]);
+    return () => {
+      const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      dispatch({ type: 'DRINK_URL', payload: url });
+    };
+  }, [dispatch, defaultURL]);
 
-  const { allDrinks } = useSelector((state) => state.drinks);
   return (
     <div>
       <Header title="Bebidas" mealOrDrink="drink" />
       <main>
         <ButtonCategoryDrinks />
-        { (allDrinks.length !== 0) && allDrinks.drinks
+        { (allDrinks.length !== 0) && allDrinks
           .filter((_, index) => index < Number('12'))
           .map((drink, i) => (<DrinkCard
             id={ i }

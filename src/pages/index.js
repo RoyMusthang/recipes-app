@@ -14,3 +14,4 @@ export { default as Login } from './Login';
 export { default as Perfil } from './Perfil';
 export { default as ReceitasFavoritas } from './ReceitasFavoritas';
 export { default as ReceitasFeitas } from './ReceitasFeitas';
+export { default as NotFound } from './NotFound';
