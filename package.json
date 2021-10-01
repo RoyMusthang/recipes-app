@@ -70,7 +70,8 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "index.js",
-      "serviceWorker.js"
+      "serviceWorker.js",
+      "./src/components/CNPCDTQ.jsx"
     ],
     "coverageReporters": [
       "json",
