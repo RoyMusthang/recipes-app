@@ -8,7 +8,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
-function ShareAndFavoriteButtons({ id, type, area = '', category, name,
+function CNPCDTQ({ id, type, area = '', category, name,
   image, alcoholicOrNot = '', index }) {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -33,7 +33,6 @@ function ShareAndFavoriteButtons({ id, type, area = '', category, name,
       { (copiedText) && (<h3>Link copiado!</h3>) }
       { console.log(type)}
       <button
-        data-testid={ `${index}-horizontal-share-btn` }
         onClick={ () => {
           copy(`http://localhost:3000/${type}s/${id}`);
           setCopiedText(true);
@@ -41,18 +40,17 @@ function ShareAndFavoriteButtons({ id, type, area = '', category, name,
         type="button"
       >
         <img
-          data-testid="share-btn"
+          data-testid={ `${index}-horizontal-share-btn` }
           src={ shareIcon }
           alt="Botão de Compartilhar"
         />
       </button>
       <button
-        data-testid={ `${index}-horizontal-favorite-btn` }
         onClick={ dispatchFavorite }
         type="button"
       >
         <img
-          data-testid="favorite-btn"
+          data-testid={ `${index}-horizontal-favorite-btn` }
           src={ (!favoriteOrNot) ? whiteHeartIcon : blackHeartIcon }
           alt="Favorite heart icon"
         />
@@ -61,7 +59,7 @@ function ShareAndFavoriteButtons({ id, type, area = '', category, name,
   );
 }
 
-ShareAndFavoriteButtons.propTypes = {
+CNPCDTQ.propTypes = {
   id: PropTypes.string,
   area: PropTypes.string,
   category: PropTypes.string,
@@ -71,4 +69,4 @@ ShareAndFavoriteButtons.propTypes = {
   alcoholicOrNot: PropTypes.string,
 }.isRequired;
 
-export default ShareAndFavoriteButtons;
+export default CNPCDTQ;

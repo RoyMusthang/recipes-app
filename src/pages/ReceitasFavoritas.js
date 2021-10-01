@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
-import ShareAndFavoriteButtons from '../components/ShareAndFavoriteButtons';
+import CNPCDTQ from '../components/CNPCDTQ';
 
 const ifTypeComida = (index, area, category) => (
   <p
@@ -64,7 +64,7 @@ function ReceitasFavoritas() {
         {finished.map((item, index) => (
           <>
             {console.log(item)}
-            <ShareAndFavoriteButtons
+            <CNPCDTQ
               id={ item.id }
               index={ index }
               type={ item.type }

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import {
+  Input,
+  ButtonLogin,
+  FormLogin,
+  DivLogin,
+  DivBackgroundLogin,
+} from '../styles/styles';
 // import PropTypes from 'prop-types';
 
 function Login() {
@@ -31,33 +38,34 @@ function Login() {
   }
   if (redirect) return <Redirect to="/comidas" />;
   return (
-    <form onSubmit={ onSubmit } className="container">
-      <div className="login-container">
-        <input
-          type="email"
-          className="login"
-          value={ email }
-          onChange={ (event) => setEmail(event.target.value) }
-          data-testid="email-input"
-        />
-        <input
-          type="password"
-          className="login"
-          data-testid="password-input"
-          value={ password }
-          onChange={ (event) => setPassword(event.target.value) }
-        />
-
-        <button
-          className="btn"
-          type="submit"
-          disabled={ validation }
-          data-testid="login-submit-btn"
-        >
-          Entrar
-        </button>
-      </div>
-    </form>
+    <>
+      <DivBackgroundLogin />
+      <FormLogin onSubmit={ onSubmit }>
+        <DivLogin>
+          <Input
+            type="email"
+            value={ email }
+            onChange={ (event) => setEmail(event.target.value) }
+            data-testid="email-input"
+            placeholder="Insira seu email"
+          />
+          <Input
+            type="password"
+            data-testid="password-input"
+            value={ password }
+            onChange={ (event) => setPassword(event.target.value) }
+            placeholder="Insira sua senha"
+          />
+          <ButtonLogin
+            type="submit"
+            disabled={ validation }
+            data-testid="login-submit-btn"
+          >
+            Entrar
+          </ButtonLogin>
+        </DivLogin>
+      </FormLogin>
+    </>
   );
 }
 

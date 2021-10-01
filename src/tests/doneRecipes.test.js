@@ -1,25 +1,39 @@
-// Testes feito pelo Gabriel Gaspar do grupo 22
-
 import React from 'react';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+// import userEvent from '@testing-library/user-event';
+// import copy from 'clipboard-copy';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import App from '../App';
+import shareButton from '../images/shareIcon.svg';
 
-const { getByTestId, queryByTestId } = screen;
+jest.mock('clipboard-copy', () => jest.fn());
 
-const arrabiata = 'Spicy Arrabiata Penne';
-const zeroName = '0-horizontal-name';
-const oneName = '1-horizontal-name';
+const filterAll = 'filter-by-all-btn';
+const filterFood = 'filter-by-food-btn';
+const filterDrink = 'filter-by-drink-btn';
+const firstCardImage = '0-horizontal-image';
+const firstCardText = '0-horizontal-top-text';
+const firstCardName = '0-horizontal-name';
+const firstCardDate = '0-horizontal-done-date';
+const firstCardShareButton = '0-horizontal-share-btn';
+const firstCardTag1 = '0-Pasta-horizontal-tag';
+const firstCardTag2 = '0-Curry-horizontal-tag';
+const secondCardImage = '1-horizontal-image';
+const secondCardText = '1-horizontal-top-text';
+const secondCardName = '1-horizontal-name';
+const secondCardDate = '1-horizontal-done-date';
+const secondCardShareButton = '1-horizontal-share-btn';
 
-const doneRecipesMock = [
+const doneRecipesPage = '/receitas-feitas';
+
+const doneRecipes = [
   {
     id: '52771',
     type: 'comida',
     area: 'Italian',
     category: 'Vegetarian',
     alcoholicOrNot: '',
-    name: arrabiata,
+    name: 'Spicy Arrabiata Penne',
     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
     doneDate: '23/06/2020',
     tags: ['Pasta', 'Curry'],
@@ -37,69 +51,49 @@ const doneRecipesMock = [
   },
 ];
 
-function sleep() {
-  const waitforUpdate = 100;
-  return new Promise((resolve) => setTimeout(resolve, waitforUpdate));
-}
+describe('54 - Verifica se os elementos foram criados', () => {
+  beforeEach(() => localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes)));
+  afterEach(() => localStorage.clear());
 
-describe('Done recipes screen', () => {
-  beforeEach(() => {
-    renderWithRouterAndRedux(<App />, {
-      initialState: { recipes: { doneRecipes: doneRecipesMock } },
-      initialEntries: ['/receitas-feitas'],
-    });
+  it('Verifica elementos de card de comida e bebida', () => {
+    renderWithRouterAndRedux(<App />, { initialEntries: [doneRecipesPage] });
+
+    expect(screen.getByTestId(filterAll)).toBeInTheDocument();
+    expect(screen.getByTestId(filterFood)).toBeInTheDocument();
+    expect(screen.getByTestId(filterDrink)).toBeInTheDocument();
+
+    expect(screen.getByTestId(firstCardImage)).toBeInTheDocument();
+    expect(screen.getByTestId(firstCardText)).toBeInTheDocument();
+    expect(screen.getByTestId(firstCardName)).toBeInTheDocument();
+    expect(screen.getByTestId(firstCardDate)).toBeInTheDocument();
+    expect(screen.getByTestId(firstCardShareButton)).toBeInTheDocument();
+    expect(screen.getByTestId(firstCardTag1)).toBeInTheDocument();
+    expect(screen.getByTestId(firstCardTag2)).toBeInTheDocument();
+
+    expect(screen.getByTestId(secondCardImage)).toBeInTheDocument();
+    expect(screen.getByTestId(secondCardText)).toBeInTheDocument();
+    expect(screen.getByTestId(secondCardName)).toBeInTheDocument();
+    expect(screen.getByTestId(secondCardDate)).toBeInTheDocument();
+    expect(screen.getByTestId(secondCardShareButton)).toBeInTheDocument();
   });
+});
 
-  it('Todos os data-testids estão disponíveis', () => {
-    // expect(getByTestId('filter-by-all-btn')).toBeInTheDocument();
-    expect(getByTestId('filter-by-food-btn')).toBeInTheDocument();
-    // expect(getByTestId('filter-by-drink-btn')).toBeInTheDocument();
-    expect(getByTestId('0-horizontal-image')).toBeInTheDocument();
-    expect(getByTestId('0-horizontal-top-text')).toBeInTheDocument();
-    expect(getByTestId(zeroName)).toBeInTheDocument();
-    expect(getByTestId('0-horizontal-done-date')).toBeInTheDocument();
-    expect(getByTestId('0-horizontal-share-btn')).toBeInTheDocument();
-    expect(getByTestId('0-Pasta-horizontal-tag')).toBeInTheDocument();
-    expect(getByTestId('0-Curry-horizontal-tag')).toBeInTheDocument();
-    expect(getByTestId('1-horizontal-image')).toBeInTheDocument();
-    expect(getByTestId('1-horizontal-top-text')).toBeInTheDocument();
-    expect(getByTestId(oneName)).toBeInTheDocument();
-    expect(getByTestId('1-horizontal-share-btn')).toBeInTheDocument();
-    expect(getByTestId('1-horizontal-done-date')).toBeInTheDocument();
-  });
+describe('55 - Verifica contéudo elementos de comida', () => {
+  beforeEach(() => localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes)));
+  afterEach(() => localStorage.clear());
 
-  it('Verifica que os filtros funcionam', async () => {
-    const allFilter = getByTestId('filter-by-all-btn');
-    const foodsFilter = getByTestId('filter-by-food-btn');
-    const drinksFilter = getByTestId('filter-by-drink-btn');
+  it('Verifica elementos de card de comida', () => {
+    renderWithRouterAndRedux(<App />, { initialEntries: [doneRecipesPage] });
 
-    userEvent.click(foodsFilter);
-    await sleep();
-    expect(getByTestId(zeroName).innerHTML).toBe(arrabiata);
-    expect(queryByTestId(oneName)).toBeNull();
-
-    userEvent.click(drinksFilter);
-    await sleep();
-    expect(getByTestId(zeroName).innerHTML).toBe('Aquamarine');
-    expect(queryByTestId(oneName)).toBeNull();
-
-    userEvent.click(allFilter);
-    await sleep();
-    expect(getByTestId(zeroName).innerHTML).toBe(arrabiata);
-    expect(getByTestId(oneName).innerHTML).toBe('Aquamarine');
-  });
-
-  it('Verifica se o botão de compartilhar funciona', () => {
-    const shareBtn = document.querySelector('.done-card-share-btn');
-    userEvent.click(shareBtn);
-  });
-
-  it('Verifica a funcionalidade do botão \'All\'', async () => {
-    const drinkButton = await screen.findByTestId('filter-by-drink-btn');
-    userEvent.click(drinkButton);
-    const allButton = await screen.findByTestId('filter-by-all-btn');
-    userEvent.click(allButton);
-
-    expect(1 + 1).toBe(2);
+    expect(screen.getByTestId(firstCardImage))
+      .toHaveProperty('src', doneRecipes[0].image);
+    expect(screen.getByTestId(firstCardText))
+      .toHaveTextContent(`${doneRecipes[0].area} - ${doneRecipes[0].category}`);
+    expect(screen.getByTestId(firstCardName)).toHaveTextContent(doneRecipes[0].name);
+    expect(screen.getByTestId(firstCardDate)).toHaveTextContent(doneRecipes[0].doneDate);
+    expect(screen.getByTestId(firstCardShareButton).firstChild)
+      .toHaveProperty('src', `http://localhost/${shareButton}`);
+    expect(screen.getByTestId(firstCardTag1)).toHaveTextContent(doneRecipes[0].tags[0]);
+    expect(screen.getByTestId(firstCardTag2)).toHaveTextContent(doneRecipes[0].tags[1]);
   });
 });

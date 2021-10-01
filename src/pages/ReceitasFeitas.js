@@ -37,7 +37,7 @@ function ReceitasFeitas() {
           finished={ finished }
           setFinished={ setFinished }
         />
-        {finished.map((item, index) => (
+        {(finished) && finished.map((item, index) => (
           <>
             <Link to={ `/${item.type}s/${item.id}` }>
               <img
@@ -67,9 +67,9 @@ function ReceitasFeitas() {
               } }
             >
               <img
+                data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
                 alt="Botão de compartilhar"
-                data-testid={ `${index}-horizontal-share-btn` }
               />
             </button>
             { (typeof item.tags === 'string') ? (<tags>{ item.tags }</tags>) : (
