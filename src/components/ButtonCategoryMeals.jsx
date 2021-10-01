@@ -47,7 +47,7 @@ function ButtonCategoryMeals() {
       >
         All
       </button>
-        {category.map((cat, index) => (
+      {category.map((cat, index) => (
         <button
           key={ index }
           type="button"
