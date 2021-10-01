@@ -45,10 +45,10 @@ function CNPCDTQ({ id, type, area = '', category, name,
           alt="Botão de Compartilhar"
         />
       </button>
-      <button
-        onClick={ dispatchFavorite }
-        type="button"
-      >
+        <button
+          onClick={ dispatchFavorite }
+          type="button"
+        >
         <img
           data-testid={ `${index}-horizontal-favorite-btn` }
           src={ (!favoriteOrNot) ? whiteHeartIcon : blackHeartIcon }
